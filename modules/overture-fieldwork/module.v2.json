@@ -3,7 +3,7 @@
   "moduleId": "gyri.module:overture-fieldwork",
   "name": "Overture Fieldwork — Coffee & Counter",
   "description": "A place-based research workspace for supplier prospecting, neighborhood partnerships and field visits, with a map, shared review queues and explicit source provenance.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "tags": [
     "capability",
     "places",
@@ -591,6 +591,16 @@
           }
         },
         {
+          "navKey": "fieldwork_connect",
+          "label": "Connect your AI",
+          "icon": "Plug",
+          "placement": "primary",
+          "page": {
+            "kind": "workspace_page",
+            "slug": "fieldwork_connect"
+          }
+        },
+        {
           "navKey": "fieldwork_method",
           "label": "Sources & method",
           "icon": "BookOpen",
@@ -619,6 +629,74 @@
             "kind": "custom_type",
             "typeKey": "fieldwork_place",
             "view": "records"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fieldwork_tools",
+      "title": "Data & connections",
+      "placement": "advanced",
+      "collapsedDefault": false,
+      "items": [
+        {
+          "navKey": "integrations",
+          "label": "Connections",
+          "icon": "Blocks",
+          "placement": "advanced",
+          "page": {
+            "kind": "route",
+            "path": "/settings/integrations"
+          }
+        },
+        {
+          "navKey": "http_connectors",
+          "label": "HTTP connectors",
+          "icon": "Plug",
+          "placement": "advanced",
+          "page": {
+            "kind": "route",
+            "path": "/connectors"
+          }
+        },
+        {
+          "navKey": "custom_data",
+          "label": "Data types",
+          "icon": "Database",
+          "placement": "advanced",
+          "page": {
+            "kind": "route",
+            "path": "/custom-data"
+          }
+        },
+        {
+          "navKey": "semantic_studio",
+          "label": "Graph model",
+          "icon": "Network",
+          "placement": "advanced",
+          "page": {
+            "kind": "route",
+            "path": "/semantic?tab=bridges"
+          }
+        },
+        {
+          "navKey": "component_studio",
+          "label": "Components",
+          "icon": "PanelsTopLeft",
+          "placement": "advanced",
+          "page": {
+            "kind": "route",
+            "path": "/components"
+          }
+        },
+        {
+          "navKey": "composed_pages",
+          "label": "Pages",
+          "icon": "Files",
+          "placement": "advanced",
+          "page": {
+            "kind": "route",
+            "path": "/pages"
           }
         }
       ]
@@ -783,6 +861,209 @@
             "fieldwork.complete_visit",
             "fieldwork.cancel_visit",
             "fieldwork.verification"
+          ]
+        }
+      }
+    },
+    {
+      "slug": "fieldwork_connect",
+      "name": "Connect your AI",
+      "description": "Use your own Gyri sign-in to explore this workspace through MCP.",
+      "definition": {
+        "version": 2,
+        "title": "Connect your AI",
+        "description": "Use your own Gyri sign-in to explore this workspace through MCP.",
+        "accent": "sage",
+        "data": {
+          "viewer": {
+            "kind": "graphql",
+            "query": "query FieldworkConnectionWorkspace { viewerContext { workspaceId } }",
+            "valuePath": "viewerContext"
+          }
+        },
+        "actions": [
+          {
+            "id": "copy_mcp_url",
+            "type": "copyToClipboard",
+            "target": {
+              "text": "https://mcp.gyri.io/mcp"
+            },
+            "onSuccess": {
+              "toast": "MCP URL copied"
+            }
+          }
+        ],
+        "root": {
+          "id": "connect",
+          "kind": "Stack",
+          "props": {
+            "className": "max-w-4xl"
+          },
+          "children": [
+            {
+              "id": "mcp_connection",
+              "kind": "Section",
+              "props": {
+                "title": "1. Add Gyri to your AI app"
+              },
+              "children": [
+                {
+                  "id": "connection_intro",
+                  "kind": "Text",
+                  "props": {
+                    "value": "Accept your Gyri workspace invitation first. Then, in an AI app that supports remote MCP, add a server named Gyri and paste the URL below into its MCP server settings.",
+                    "className": "text-base leading-7"
+                  }
+                },
+                {
+                  "id": "active_workspace",
+                  "kind": "Text",
+                  "props": {
+                    "value": "Current workspace: {{data.viewer.workspaceId}}",
+                    "className": "text-base font-semibold"
+                  }
+                },
+                {
+                  "id": "workspace_mcp_url",
+                  "kind": "Text",
+                  "props": {
+                    "value": "https://mcp.gyri.io/mcp",
+                    "className": "select-all break-all rounded-lg bg-slate-50 p-4 font-mono text-base"
+                  },
+                  "visibleWhen": "{{data.viewer.workspaceId}}"
+                },
+                {
+                  "id": "copy_url",
+                  "kind": "Button",
+                  "props": {
+                    "label": "Copy MCP URL",
+                    "variant": "primary"
+                  },
+                  "action": "copy_mcp_url",
+                  "visibleWhen": "{{data.viewer.workspaceId}}"
+                },
+                {
+                  "id": "url_hint",
+                  "kind": "Text",
+                  "props": {
+                    "value": "This is Gyri’s canonical MCP address. The workspace you choose during sign-in and OAuth consent determines which workspace the connection can access.",
+                    "className": "text-sm leading-6"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "consent",
+              "kind": "Section",
+              "props": {
+                "title": "2. Sign in and allow only this workspace"
+              },
+              "children": [
+                {
+                  "id": "consent_steps",
+                  "kind": "Text",
+                  "props": {
+                    "value": "Sign in with the same Gyri account that accepted your workspace invitation. Select the current workspace shown above. Choose “Only this workspace” during consent and approve the connection.",
+                    "className": "text-base leading-7"
+                  }
+                },
+                {
+                  "id": "own_identity",
+                  "kind": "Text",
+                  "props": {
+                    "value": "Use your own sign-in. You do not need the workspace owner’s API key, a shared credential or a new invitation. The connection keeps your assigned workspace permissions.",
+                    "className": "text-base leading-7"
+                  }
+                },
+                {
+                  "id": "deployment_name",
+                  "kind": "Text",
+                  "props": {
+                    "value": "This Coffee & Counter deployment is in the Overture Fieldwork workspace (overture-fieldwork). If another workspace is shown above, return to Coffee & Counter before connecting.",
+                    "className": "text-sm leading-6"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "first_question",
+              "kind": "Section",
+              "props": {
+                "title": "3. Start with the evidence"
+              },
+              "children": [
+                {
+                  "id": "first_prompt",
+                  "kind": "Text",
+                  "props": {
+                    "value": "Show me the place types, connected public data sources and graph relationships in this workspace. Then find a few coffee shops or bakeries I could research. Keep source facts separate from candidate matches and team decisions.",
+                    "className": "rounded-lg bg-slate-50 p-4 text-base leading-7"
+                  }
+                },
+                {
+                  "id": "read_access",
+                  "kind": "Text",
+                  "props": {
+                    "value": "Read-only reviewers can inspect records and metadata. Saving notes, configuring sources or changing the graph requires the relevant write permission; connecting an AI does not expand your role.",
+                    "className": "text-base leading-7"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "discover",
+              "kind": "Section",
+              "props": {
+                "title": "Explore what powers the app"
+              },
+              "children": [
+                {
+                  "id": "places_link",
+                  "kind": "Link",
+                  "props": {
+                    "label": "Explore places",
+                    "href": "/pages/fieldwork?kb_ws={{data.viewer.workspaceId}}",
+                    "className": "text-base"
+                  }
+                },
+                {
+                  "id": "sources_link",
+                  "kind": "Link",
+                  "props": {
+                    "label": "HTTP connectors and public source operations",
+                    "href": "/connectors?kb_ws={{data.viewer.workspaceId}}",
+                    "className": "text-base"
+                  }
+                },
+                {
+                  "id": "types_link",
+                  "kind": "Link",
+                  "props": {
+                    "label": "Data types and saved records",
+                    "href": "/custom-data?kb_ws={{data.viewer.workspaceId}}",
+                    "className": "text-base"
+                  }
+                },
+                {
+                  "id": "graph_link",
+                  "kind": "Link",
+                  "props": {
+                    "label": "Graph model and relationships",
+                    "href": "/semantic?tab=bridges&kb_ws={{data.viewer.workspaceId}}",
+                    "className": "text-base"
+                  }
+                },
+                {
+                  "id": "method_link",
+                  "kind": "Link",
+                  "props": {
+                    "label": "Sources & method",
+                    "href": "/dashboards/fieldwork_method?kb_ws={{data.viewer.workspaceId}}",
+                    "className": "text-base"
+                  }
+                }
+              ]
+            }
           ]
         }
       }

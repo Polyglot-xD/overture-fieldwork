@@ -20,6 +20,10 @@ Explore provides intent presets, map/list views, search and venue/review filters
 
 Team shortlist is a shared workspace view, not a personal filter. Field visits shows the team's internal plans. Both use the same place records, so edits appear consistently across the app. Sources & method explains scope, attribution, independent source refreshes and uncertainty. The raw source browser and workspace overview remain available as advanced navigation.
 
+Connect your AI is a credential-free native page. It reads the current workspace through `viewerContext`, shows the canonical MCP URL beside that workspace, and offers a local copy button. Sign in with your own invited Gyri account and choose **Only this workspace** during OAuth consent. Accept the invitation first; OAuth consent and the assigned role enforce access. No owner key is shared and this page does not call the Welcome credential bootstrap.
+
+Data & connections exposes six advanced discovery links: Connections, HTTP connectors, Data types, Graph model, Components and Pages. A viewer can inspect metadata without receiving developer privileges. The workspace's existing data entitlement still applies. Connector, schema, record, semantic and component operations retain their separate write permissions. Some inherited studio screens show edit controls even when the assigned role lacks the associated management permission. Navigation visibility is guidance, not an authorization grant.
+
 The geographic renderer is a reusable native Gyri capability configured with field bindings and presets. The module carries the use cases, wording, source context and view defaults. It does not introduce a tenant-specific service or worker.
 
 The visual contract uses clear dark text, a restrained forest accent, a distinct caution color, readable 16px body text and 14px labels. Map marks and review states also have text equivalents. Keyboard focus, meaningful button labels, responsive map/list layouts and explicit empty/loading/error states are part of the renderer contract. Empty queues explain the next useful action; they do not contain fabricated sample prospects or decisions.
@@ -65,11 +69,13 @@ mutation InstallFieldwork($module: JSON!) {
 }
 ```
 
-The package installs the place schema, three concept-widget pages, four semantic components, two source/progress dashboards, a shared research kanban, navigation and eight guarded existing-record actions. Companion JSON files are reviewable copies of the artifacts embedded in the module.
+The package installs the place schema, three concept-widget pages, one native v2 connection page, four semantic components, two source/progress dashboards, a shared research kanban, navigation and eight guarded existing-record actions. Companion JSON files are reviewable copies of the artifacts embedded in the module. Page v1 has no markdown widget; `connect.page.json` uses the supported v2 Page/Stack/Section/Text/Link/Button primitives and only a read-only query plus a clipboard action.
 
 The runtime must support the generic `geographic` semantic renderer and bounded 500-record geographic data plan. The record action executor must support `xGyriExistingRecordIdField` paired with `existing_record_only`; it locks and merges the selected existing record instead of creating a replacement. The action dialog understands multiline notes and local date/time inputs. Older executors must fail closed. No special user identity or workspace credential is packaged here.
 
 `navigation.json` is the optional focused-sidebar override. It hides default core navigation while retaining the module's navigation contribution. Apply it only in the intended app workspace with `setWorkspaceNavigation(nav:$nav)`; copying the module's items into an override would duplicate them.
+
+Module navigation paths stay relative for portable installation. The host sidebar must retain the active workspace on navigation. The connection page's internal links use the actual queried workspace ID. For this deployment, direct entry is [Connect your AI](https://app.gyri.io/pages/fieldwork_connect?kb_ws=overture-fieldwork), and the canonical MCP URL is `https://mcp.gyri.io/mcp`. Select `overture-fieldwork` during consent and choose Only this workspace.
 
 ## Governed import and refresh
 

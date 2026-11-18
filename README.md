@@ -10,6 +10,8 @@ A venue map answers where. A field team also needs to remember what it checked, 
 
 The immutable public snapshot contains **486 downtown San Francisco places** from Overture release **2026-11-18.0**. Explore includes an embedded map, a keyboard-accessible place list, search, intent presets and category/review/website filters. Select a place for its source facts and team notes; open its research notebook to save a decision, owner, next step, evidence check or visit plan. Team shortlist and Field visits are shared views of those same records. Editors can save; invited viewers can read.
 
+[Connect your AI](https://app.gyri.io/pages/fieldwork_connect?kb_ws=overture-fieldwork) shows the canonical MCP URL and current workspace's OAuth instructions. Accept your invitation first, then use your own sign-in and select **Only this workspace**; no owner key is shared. Data & connections offers advanced discovery of connections, HTTP source operations, data types, graph relationships, components and pages. Viewers can inspect metadata while write permissions remain separate.
+
 ## Three uses
 
 - **Supplier prospects:** Find coffee shops, cafés, bakeries, roasteries and counter-service venues; check the evidence and capture a relevant next step. A category is a research starting point, not proof of buying interest.
