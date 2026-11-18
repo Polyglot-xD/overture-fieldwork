@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "title": "Data & method",
+  "description": "What the source supports, what the team decides, and how the data got here.",
+  "tiles": [
+    {
+      "id": "scope",
+      "kind": "text",
+      "title": "A useful slice, not an exhaustive directory",
+      "content": "Coffee & Counter focuses on cafes, coffee shops and counter-service food venues in central San Francisco. It gives wholesale roasters, bakery suppliers and neighborhood partnership teams a starting research queue.\n\nThe initial workspace contains 486 places from Overture Maps places release 2026-11-18.0, inside bounding box [-122.422, 37.775, -122.393, 37.801]. The extraction selects 12 categories, requires place confidence of at least 0.80, and excludes places explicitly marked permanently closed.\n\nUnknown operating status remains unknown. Named chains may appear. Missing brand metadata never proves independent ownership.",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 4
+      },
+      "style": {
+        "accent": "sage"
+      }
+    },
+    {
+      "id": "evidence",
+      "kind": "text",
+      "title": "Keep evidence and judgment separate",
+      "content": "Each place retains its Overture/GERS ID, record version, release, coordinates, source datasets, licenses, source evidence and unmodified raw properties.\n\nOverture confidence estimates place existence. It is not partner fit or venue quality. Website listed means a URL exists in the source; it is not a reachability test.\n\nTeam review status, research notes, owner, next action and last verification time start empty or unreviewed. These judgments survive a later source refresh.",
+      "layout": {
+        "x": 0,
+        "y": 4,
+        "w": 6,
+        "h": 4
+      }
+    },
+    {
+      "id": "cuts",
+      "kind": "text",
+      "title": "Deliberate trade-offs",
+      "content": "A bounded, one-time snapshot keeps the workspace fast and the import reproducible. All 486 selected places fit within the Explore view’s 500-row limit. The extractor reapplies the exact bounding box before selection.\n\nUse the map URL in a place’s fields to inspect its location. Gyri supplies search, records, evidence, shared research and permissions.\n\nThis version cuts live refresh, embedded map tiles, route optimization, automatic fit scoring, contact enrichment and outbound campaigns.",
+      "layout": {
+        "x": 6,
+        "y": 4,
+        "w": 6,
+        "h": 4
+      }
+    },
+    {
+      "id": "attribution",
+      "kind": "text",
+      "title": "Attribution and source links",
+      "content": "Data © Overture Maps Foundation and its source contributors. Source-specific license metadata remains on each record. The extraction bundle includes its manifest, applicable license files and the Foursquare places notice.\n\nOverture Maps: https://overturemaps.org/\nData explorer: https://explore.overturemaps.org/\nPlaces schema: https://docs.overturemaps.org/schema/reference/places/place/\nAttribution: https://docs.overturemaps.org/attribution/\nFoursquare notice: https://opensource.foursquare.com/places-notice-txt/\n\nOpenStreetMap links support location inspection; they do not verify a business fact.",
+      "layout": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 3
+      },
+      "style": {
+        "accent": "neutral"
+      }
+    }
+  ]
+}

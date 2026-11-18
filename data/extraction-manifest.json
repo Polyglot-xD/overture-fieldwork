@@ -1,0 +1,117 @@
+{
+  "dataset": "Overture Maps Foundation places",
+  "release": "2026-11-18.0",
+  "extracted_at": "2026-11-18T19:02:51.622861+00:00",
+  "normalized_at": "2026-11-18T19:06:51.785981+00:00",
+  "bbox": {
+    "west": -122.422,
+    "south": 37.775,
+    "east": -122.393,
+    "north": 37.801
+  },
+  "catalog_url": "https://stac.overturemaps.org/catalog.json",
+  "release_url": "https://stac.overturemaps.org/2026-11-18.0/catalog.json",
+  "data_path": "s3://overturemaps-us-west-2/release/2026-11-18.0/theme=places/type=place/",
+  "attribution_url": "https://docs.overturemaps.org/attribution/",
+  "attribution": "Overture Maps Foundation, overturemaps.org; source providers and licenses preserved per record.",
+  "source_licenses": [
+    "Apache-2.0",
+    "CC0-1.0",
+    "CDLA-Permissive-2.0"
+  ],
+  "license_urls": {
+    "CDLA-Permissive-2.0": "https://raw.githubusercontent.com/Community-Data-License-Agreements/Releases/main/CDLA-Permissive-2.0.txt",
+    "Apache-2.0": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+    "CC0-1.0": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/CC0-1.0.txt"
+  },
+  "foursquare_notice_url": "https://opensource.foursquare.com/places-notice-txt/",
+  "source_datasets": [
+    "AllThePlaces",
+    "Birdeye",
+    "BrightQuery",
+    "DAC",
+    "Foursquare",
+    "Microsoft",
+    "OpenTravel",
+    "Overture",
+    "Overture-signals",
+    "PinMeTo",
+    "Uberall",
+    "meta"
+  ],
+  "overturemaps_version": "2.1.1",
+  "download_command": [
+    "/usr/bin/python3",
+    "-m",
+    "overturemaps",
+    "download",
+    "--bbox=-122.422,37.775,-122.393,37.801",
+    "-f",
+    "geojson",
+    "--type=place",
+    "--release=2026-11-18.0",
+    "-o",
+    "output/overture-fieldwork/sf-downtown-places.geojson"
+  ],
+  "raw_sha256": "e6e880cf8d9b35cc40e38561694f5ff6449c89151a52d6422624d470d247c138",
+  "raw_bytes": 47289567,
+  "counts": {
+    "raw": 32692,
+    "excluded_outside_exact_bbox": 10,
+    "all": 32682,
+    "food_and_drink": 2412,
+    "focus": 486
+  },
+  "files": {
+    "all": "all-places.jsonl",
+    "food_and_drink": "food-places.jsonl",
+    "focus": "focus-places.jsonl"
+  },
+  "focus_filter": {
+    "primary_categories": [
+      "bagel_shop",
+      "bakery",
+      "breakfast_and_brunch_restaurant",
+      "bubble_tea_shop",
+      "cafe",
+      "coffee_roastery",
+      "coffee_shop",
+      "donut_shop",
+      "hong_kong_style_cafe",
+      "internet_cafe",
+      "sandwich_shop",
+      "tea_room"
+    ],
+    "minimum_existence_confidence": 0.8,
+    "excluded_operating_status": [
+      "permanently_closed"
+    ]
+  },
+  "focus_categories": {
+    "coffee_shop": 166,
+    "cafe": 115,
+    "sandwich_shop": 62,
+    "bakery": 61,
+    "bubble_tea_shop": 32,
+    "breakfast_and_brunch_restaurant": 20,
+    "tea_room": 9,
+    "bagel_shop": 8,
+    "donut_shop": 8,
+    "coffee_roastery": 2,
+    "hong_kong_style_cafe": 2,
+    "internet_cafe": 1
+  },
+  "focus_statuses": {
+    "unknown": 36,
+    "open": 450
+  },
+  "focus_website_count": 422,
+  "caveats": [
+    "Confidence measures existence, not quality, openness, accessibility, or suitability.",
+    "An open source status is not a current field verification.",
+    "Unknown operating status is retained for review.",
+    "Provider duplicates can remain under different GERS IDs; names are not deduplicated heuristically.",
+    "Independent ownership and purchasing intent are not inferred.",
+    "User review fields are initial defaults; imports must preserve subsequent human notes and status."
+  ]
+}

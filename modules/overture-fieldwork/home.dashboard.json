@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "title": "Your partner research desk",
+  "description": "A place-based research queue for wholesale roasters, bakery suppliers, and neighborhood partnership teams.",
+  "tiles": [
+    {
+      "id": "intro",
+      "kind": "text",
+      "title": "From a map pin to a useful conversation",
+      "content": "Start with a real venue, keep the evidence, make a deliberate shortlist.\n\nChoose Explore places in the sidebar to find a venue. Open its row to inspect the website, map location and source evidence. Use Update review status to shortlist it, or Replace research notes to save what your team learned. Editors can save changes; invited reviewers have read-only access.\n\nYour shortlist appears below once an editor saves a shortlisted decision. A shortlist is a research decision, not evidence of buying intent or supplier fit.",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 4
+      },
+      "style": {
+        "accent": "sage",
+        "emphasis": "strong"
+      }
+    },
+    {
+      "id": "places",
+      "kind": "stat",
+      "title": "Places in this workspace",
+      "dataSource": {
+        "kind": "workspace_record_count",
+        "typeKey": "fieldwork_place"
+      },
+      "layout": {
+        "x": 0,
+        "y": 4,
+        "w": 3,
+        "h": 1
+      },
+      "style": {
+        "accent": "neutral"
+      }
+    },
+    {
+      "id": "unreviewed",
+      "kind": "stat",
+      "title": "Still unreviewed",
+      "dataSource": {
+        "kind": "workspace_record_count",
+        "typeKey": "fieldwork_place",
+        "filters": {
+          "review_status": "unreviewed"
+        }
+      },
+      "layout": {
+        "x": 3,
+        "y": 4,
+        "w": 3,
+        "h": 1
+      },
+      "style": {
+        "accent": "sky"
+      }
+    },
+    {
+      "id": "shortlisted",
+      "kind": "stat",
+      "title": "Your shortlist",
+      "dataSource": {
+        "kind": "workspace_record_count",
+        "typeKey": "fieldwork_place",
+        "filters": {
+          "review_status": "shortlisted"
+        }
+      },
+      "layout": {
+        "x": 6,
+        "y": 4,
+        "w": 3,
+        "h": 1
+      },
+      "style": {
+        "accent": "sage"
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "stat",
+      "title": "Verify first",
+      "dataSource": {
+        "kind": "workspace_record_count",
+        "typeKey": "fieldwork_place",
+        "filters": {
+          "review_status": "verify_first"
+        }
+      },
+      "layout": {
+        "x": 9,
+        "y": 4,
+        "w": 3,
+        "h": 1
+      },
+      "style": {
+        "accent": "rose"
+      }
+    },
+    {
+      "id": "shortlist",
+      "kind": "table",
+      "title": "Your shortlist — empty until you decide",
+      "dataSource": {
+        "kind": "workspace_records",
+        "typeKey": "fieldwork_place",
+        "filters": {
+          "review_status": "shortlisted"
+        },
+        "limit": 100
+      },
+      "columns": [
+        {
+          "field": "name",
+          "label": "Place"
+        },
+        {
+          "field": "category_label",
+          "label": "Type"
+        },
+        {
+          "field": "full_address",
+          "label": "Address"
+        },
+        {
+          "field": "research_notes",
+          "label": "Why it belongs",
+          "format": "preview",
+          "previewMaxLength": 180
+        },
+        {
+          "field": "next_action",
+          "label": "Next step",
+          "format": "preview",
+          "previewMaxLength": 120
+        }
+      ],
+      "layout": {
+        "x": 0,
+        "y": 5,
+        "w": 12,
+        "h": 4
+      },
+      "style": {
+        "accent": "sage"
+      }
+    },
+    {
+      "id": "review_rules",
+      "kind": "text",
+      "title": "A review status that means something",
+      "content": "Unreviewed: source data only. Verify first: a current fact is missing or uncertain. Shortlisted: worth further partner research. Visited: your team actually visited. Passed: your team decided to skip.\n\nWrite the reason in research notes. Leave verification dates empty until checked. This dataset does not guarantee opening hours, ownership, purchasing activity or partnership intent.",
+      "layout": {
+        "x": 0,
+        "y": 9,
+        "w": 12,
+        "h": 3
+      },
+      "style": {
+        "accent": "neutral"
+      }
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "name": "Fieldwork place",
+  "description": "Inspect the source, then update your team’s review or replace its research notes. These actions save only the selected place’s team fields.",
+  "data": {
+    "source": {
+      "kind": "workspace_records",
+      "typeKey": "fieldwork_place"
+    },
+    "mode": "many",
+    "fields": [
+      {
+        "path": "name",
+        "label": "Place",
+        "role": "title"
+      },
+      {
+        "path": "category_label",
+        "label": "Venue type",
+        "role": "primary"
+      },
+      {
+        "path": "full_address",
+        "label": "Address",
+        "role": "primary"
+      },
+      {
+        "path": "review_status",
+        "label": "Team review",
+        "role": "primary"
+      },
+      {
+        "path": "research_notes",
+        "label": "Research notes",
+        "role": "primary"
+      },
+      {
+        "path": "website",
+        "label": "Website",
+        "role": "metadata",
+        "format": "link"
+      },
+      {
+        "path": "map_url",
+        "label": "View on map",
+        "role": "metadata",
+        "format": "link"
+      },
+      {
+        "path": "operating_status",
+        "label": "Source operating status",
+        "role": "metadata"
+      },
+      {
+        "path": "confidence",
+        "label": "Place existence confidence",
+        "role": "metadata"
+      },
+      {
+        "path": "data_release",
+        "label": "Source release",
+        "role": "metadata"
+      }
+    ],
+    "relationships": [],
+    "filters": {},
+    "excludeFilters": {},
+    "sort": {
+      "field": "record_id",
+      "order": "asc"
+    },
+    "limit": 25,
+    "maxNodes": 150
+  },
+  "semanticTypes": [
+    "fieldwork_place"
+  ],
+  "bindings": {},
+  "defaultFilters": {},
+  "renderer": {
+    "kind": "detail",
+    "fields": [
+      {
+        "path": "name",
+        "label": "Place",
+        "emphasis": "title"
+      },
+      {
+        "path": "category_label",
+        "label": "Venue type",
+        "emphasis": "primary"
+      },
+      {
+        "path": "full_address",
+        "label": "Address",
+        "emphasis": "primary"
+      },
+      {
+        "path": "review_status",
+        "label": "Team review",
+        "emphasis": "primary"
+      },
+      {
+        "path": "research_notes",
+        "label": "Research notes",
+        "emphasis": "primary"
+      },
+      {
+        "path": "website",
+        "label": "Website",
+        "format": "link",
+        "emphasis": "metadata"
+      },
+      {
+        "path": "map_url",
+        "label": "View on map",
+        "format": "link",
+        "emphasis": "metadata"
+      },
+      {
+        "path": "operating_status",
+        "label": "Source operating status",
+        "emphasis": "metadata"
+      },
+      {
+        "path": "confidence",
+        "label": "Place existence confidence",
+        "emphasis": "metadata"
+      },
+      {
+        "path": "data_release",
+        "label": "Source release",
+        "emphasis": "metadata"
+      }
+    ],
+    "options": {
+      "width": "full",
+      "height": "content",
+      "density": "comfortable"
+    }
+  },
+  "children": [],
+  "actions": [
+    {
+      "actionKey": "fieldwork.review_status",
+      "label": "Update review status",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.research_notes",
+      "label": "Replace research notes",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    }
+  ],
+  "style": {
+    "tokens": {},
+    "scopedCss": ""
+  },
+  "fixtures": []
+}

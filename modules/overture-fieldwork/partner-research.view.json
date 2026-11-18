@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "renderer": "kanban",
+  "title": "Partner research queue",
+  "description": "Team research stages; moving a card changes review status only. No outreach.",
+  "dataSource": {
+    "kind": "workspace_records",
+    "typeKey": "fieldwork_place",
+    "limit": 500
+  },
+  "columns": {
+    "field": "review_status",
+    "values": [
+      {
+        "value": "unreviewed",
+        "label": "Unreviewed"
+      },
+      {
+        "value": "verify_first",
+        "label": "Verify First"
+      },
+      {
+        "value": "shortlisted",
+        "label": "Shortlisted"
+      },
+      {
+        "value": "visited",
+        "label": "Visited"
+      },
+      {
+        "value": "passed",
+        "label": "Passed"
+      }
+    ]
+  },
+  "card": {
+    "titleField": "name",
+    "subtitleFields": [
+      "category_label",
+      "full_address"
+    ],
+    "badgeFields": [
+      "operating_status"
+    ],
+    "editableFields": [
+      "research_notes",
+      "owner",
+      "next_action",
+      "last_verified_at"
+    ]
+  },
+  "transitions": [
+    {
+      "from": "unreviewed",
+      "to": "verify_first",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "unreviewed",
+      "to": "shortlisted",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "unreviewed",
+      "to": "visited",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "unreviewed",
+      "to": "passed",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "verify_first",
+      "to": "unreviewed",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "verify_first",
+      "to": "shortlisted",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "verify_first",
+      "to": "visited",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "verify_first",
+      "to": "passed",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "shortlisted",
+      "to": "unreviewed",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "shortlisted",
+      "to": "verify_first",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "shortlisted",
+      "to": "visited",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "shortlisted",
+      "to": "passed",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "visited",
+      "to": "unreviewed",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "visited",
+      "to": "verify_first",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "visited",
+      "to": "shortlisted",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "visited",
+      "to": "passed",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "passed",
+      "to": "unreviewed",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "passed",
+      "to": "verify_first",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "passed",
+      "to": "shortlisted",
+      "confirm": false,
+      "action": "update_record"
+    },
+    {
+      "from": "passed",
+      "to": "visited",
+      "confirm": false,
+      "action": "update_record"
+    }
+  ]
+}

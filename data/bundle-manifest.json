@@ -1,0 +1,55 @@
+{
+  "dataset": "Overture Maps Foundation places \u2014 Coffee & Counter focused snapshot",
+  "release": "2026-11-18.0",
+  "record_count": 486,
+  "source_extraction_manifest": "extraction-manifest.json",
+  "source_fields_omitted": [
+    "assigned_to",
+    "assignee",
+    "last_verified_at",
+    "next_action",
+    "owner",
+    "research_notes",
+    "researcher",
+    "review_status",
+    "reviewed_at",
+    "reviewed_by"
+  ],
+  "files": [
+    {
+      "path": "data/focus-places.jsonl",
+      "bytes": 1574652,
+      "sha256": "a338e83d2c67b35a1af6264b10968e2b82e7e30fe3813dd013bb4b510689087b"
+    },
+    {
+      "path": "data/extraction-manifest.json",
+      "bytes": 3499,
+      "sha256": "f2fe0a25a283eab0f234d028b589559bf69b7628b101509279bce085af0d16e0"
+    },
+    {
+      "path": "data/licenses/CDLA-Permissive-2.0.txt",
+      "bytes": 2354,
+      "sha256": "4531a67d443284d93ffed0803df5b10634aff21c3d77e381f2d48af01d875868"
+    },
+    {
+      "path": "data/licenses/Apache-2.0.txt",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "data/licenses/CC0-1.0.txt",
+      "bytes": 7048,
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "path": "data/licenses/Foursquare-NOTICE.html",
+      "bytes": 91213,
+      "sha256": "389aa0a10b80fab502673745f143eb9c0b151e776e468492f64f5d1d50b1cf4b"
+    }
+  ],
+  "notes": [
+    "Only public source facts are included; live workspace records, reviewer notes, membership data, native record IDs, invitations and import receipts are excluded.",
+    "The original extraction manifest describes the full downloaded slice; only the focused normalized data is bundled here. Re-run extraction to obtain the full raw GeoJSON and broader slices.",
+    "Per-record contributor, source release, upstream license, raw properties and GERS identifiers are retained."
+  ]
+}

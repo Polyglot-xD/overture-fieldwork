@@ -1,0 +1,83 @@
+[
+  {
+    "actionKey": "fieldwork.review_status",
+    "channel": "workspace",
+    "displayName": "Update review status",
+    "semanticCapability": "workspace.record.put",
+    "inputSchema": {
+      "type": "object",
+      "xGyriTargetTypeKey": "fieldwork_place",
+      "xGyriExistingRecordIdField": "record_id",
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "title": "Selected place",
+          "minLength": 1
+        },
+        "review_status": {
+          "type": "string",
+          "title": "Team review",
+          "description": "Shortlisted means worth further research; visited means your team actually visited.",
+          "enum": [
+            "unreviewed",
+            "verify_first",
+            "shortlisted",
+            "visited",
+            "passed"
+          ]
+        }
+      },
+      "required": [
+        "record_id",
+        "review_status"
+      ],
+      "additionalProperties": false
+    },
+    "outcomeEvents": [
+      "workspace.record.saved"
+    ],
+    "hardGuards": [
+      "target_type:fieldwork_place",
+      "existing_record_only"
+    ],
+    "capabilityGated": true
+  },
+  {
+    "actionKey": "fieldwork.research_notes",
+    "channel": "workspace",
+    "displayName": "Replace research notes",
+    "semanticCapability": "workspace.record.put",
+    "inputSchema": {
+      "type": "object",
+      "xGyriTargetTypeKey": "fieldwork_place",
+      "xGyriExistingRecordIdField": "record_id",
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "title": "Selected place",
+          "minLength": 1
+        },
+        "research_notes": {
+          "type": "string",
+          "title": "Research notes",
+          "description": "Replaces this place’s current notes. Keep source observations and assumptions distinct.",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "record_id",
+        "research_notes"
+      ],
+      "additionalProperties": false
+    },
+    "outcomeEvents": [
+      "workspace.record.saved"
+    ],
+    "hardGuards": [
+      "target_type:fieldwork_place",
+      "existing_record_only"
+    ],
+    "capabilityGated": true
+  }
+]
