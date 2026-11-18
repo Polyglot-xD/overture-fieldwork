@@ -8,13 +8,14 @@ The new reusable map/list renderer contributed for Coffee & Counter. The module 
 - `components/widgets/geographic-explorer-model.ts`: field mapping, filters, coordinate validation, source-date formatting, distance, safe external URLs and CSV preparation.
 - `components/widgets/geographic-explorer-styles.ts`: scoped responsive styles.
 - `components/widgets/geographic-explorer-model.unit.test.ts`: 33 meaningful model regressions, including invalid coordinates, complete result filtering, filter composition, unsafe URLs, calendar/epoch dates and spreadsheet-safe exports.
+- `components/widgets/GeographicWorkspaceExplorer.unit.test.tsx`: matching-workspace save refresh and listener lifecycle regressions.
 - `vendor/leaflet/`: Leaflet 1.9.4 JavaScript and CSS with its BSD 2-Clause license.
 
 ## Host integration
 
 These are source contributions for Gyri's React/TypeScript runtime, not a standalone application. Copy `components/widgets/*` to the corresponding Gyri `ui/src/components/widgets/` location and `vendor/leaflet/*` to `ui/src/vendor/leaflet/`. The relative imports deliberately preserve that layout. The runtime's existing authentication, workspace scope, semantic query execution, record notebook and permission enforcement remain host responsibilities. An explicit workspace in the page URL must remain scoped to that tab; another tab changing shared browser storage must not redirect its data or actions into a different workspace.
 
-The renderer imports a host `rest` adapter from `../../api/rest`. Its context request is `rest('/graphql', {method:'POST', body:{query,variables}})`, returning the decoded GraphQL response. Supply an equivalent authenticated, workspace-scoped adapter if integrating elsewhere. No provider credential or direct database access is required.
+The renderer imports the host `getActiveWorkspaceId()` getter from `../../api/base` and a `rest` adapter from `../../api/rest`. Its context request is `rest('/graphql', {method:'POST', body:{query,variables}})`, returning the decoded GraphQL response. Supply an equivalent authenticated, workspace-scoped adapter if integrating elsewhere. No provider credential or direct database access is required.
 
 Expose `GeographicWorkspaceExplorer` through the host semantic renderer kind `geographic`. Pass the semantic component's name, description, complete bounded rows and `rendererOptions` as `options`; pass `onOpenRecord(recordId)` to open the native place notebook and `onRefresh()` for data reload. The host geographic data plan must admit up to 500 rows so all 486 source places are included. The saved component files provide complete field bindings and presets.
 
@@ -24,8 +25,10 @@ Leaflet is dynamically imported when the map mounts. Import its CSS as a **text 
 
 The notebook actions rely on a separate generic Gyri capability: the record action executor honors `xGyriExistingRecordIdField` with `existing_record_only`, locks and merges the selected record, and checks write permission. The dialog renders JSON Schema `textarea` and `date-time` formats, converting local visit time to an ISO instant. Those existing private platform files are intentionally outside this source bundle; older runtimes must fail closed rather than create a replacement record.
 
+After a successful native record action, the host notebook emits `window.dispatchEvent(new CustomEvent('gyri:record-action-completed', {detail:{workspaceId,recordId}}))` before reloading itself. Use the active tab's workspace and the canonical selected record ID; never derive identity from editable body fields. The explorer listens only when `onRefresh` is supplied, verifies the exact current workspace and an existing row ID through its field bindings, then requests a fresh governed query. This keeps notes, list states and shared queue counts current without a poller. Other workspaces, unknown records and malformed events are ignored, and listeners are removed on unmount.
+
 ## Validation
 
-The geographic model tests run with Vitest in the Gyri host. Together with the host action-dialog tests, the implementation passed 43 UI tests. The published model suite has no platform imports and can also run in a TypeScript/Vitest project. An isolated test run does not validate host permissions, GraphQL wiring or deployment.
+The geographic model tests run with Vitest in the Gyri host. Together with the host action-dialog tests, the implementation passed 47 UI tests, including successful-save publication, rejected-save suppression and workspace-scoped view refresh. The published model suite has no platform imports and can also run in a TypeScript/Vitest project. An isolated test run does not validate host permissions, GraphQL wiring or deployment.
 
 Leaflet's upstream license is preserved at `vendor/leaflet/LICENSE`. The Overture snapshot and public source feeds retain their separate attribution and terms.

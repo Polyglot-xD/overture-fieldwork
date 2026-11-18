@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import leafletStyles from '../../vendor/leaflet/leaflet.css';
+import { getActiveWorkspaceId } from '../../api/base';
 import { rest } from '../../api/rest';
 import { geographicExplorerStyles } from './geographic-explorer-styles';
 import { filterGeographicRows, formatGeographicSourceDate, geographicCoordinates, geographicCsv, geographicDistance, geographicValue, safeGeographicUrl, type GeographicFieldMap, type GeographicPreset, type GeographicRow } from './geographic-explorer-model';
@@ -84,6 +85,17 @@ function GeographicMap({ rows, fields, selectedId, onSelect, fitVersion, options
 export function GeographicWorkspaceExplorer({ name, description, rows, options = {}, onOpenRecord, onRefresh }: Props) {
   const statusLabels = { ...statuses, ...object(options.statusLabels) } as Record<string, string>;
   const fields = useMemo(() => object(options.fieldMap) as GeographicFieldMap, [options.fieldMap]);
+  useEffect(() => {
+    if (!onRefresh) return;
+    const onRecordActionCompleted = (event: Event) => {
+      const detail = object((event as CustomEvent).detail);
+      if (typeof detail.workspaceId !== 'string' || !detail.workspaceId || detail.workspaceId !== getActiveWorkspaceId()) return;
+      if (typeof detail.recordId !== 'string' || !detail.recordId || !rows.some(row => geographicValue(row, fields, 'id') === detail.recordId)) return;
+      onRefresh();
+    };
+    window.addEventListener('gyri:record-action-completed', onRecordActionCompleted);
+    return () => window.removeEventListener('gyri:record-action-completed', onRecordActionCompleted);
+  }, [onRefresh, rows, fields]);
   const presets = useMemo(() => Array.isArray(options.presets) ? options.presets as GeographicPreset[] : [], [options.presets]);
   const [presetId, setPresetId] = useState(text(options.defaultPreset) || 'all');
   const [search, setSearch] = useState(''), [category, setCategory] = useState(''), [status, setStatus] = useState(''), [website, setWebsite] = useState('');
