@@ -3,7 +3,7 @@
   "moduleId": "gyri.module:overture-fieldwork",
   "name": "Overture Fieldwork — Coffee & Counter",
   "description": "A place-based research workspace for supplier prospecting, neighborhood partnerships and field visits, with a map, shared review queues and explicit source provenance.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "tags": [
     "capability",
     "places",
@@ -636,34 +636,34 @@
     {
       "id": "fieldwork_tools",
       "title": "Data & connections",
-      "placement": "advanced",
+      "placement": "primary",
       "collapsedDefault": false,
       "items": [
         {
-          "navKey": "integrations",
-          "label": "Connections",
-          "icon": "Blocks",
-          "placement": "advanced",
-          "page": {
-            "kind": "route",
-            "path": "/settings/integrations"
-          }
-        },
-        {
           "navKey": "http_connectors",
-          "label": "HTTP connectors",
+          "label": "Public data sources",
           "icon": "Plug",
-          "placement": "advanced",
+          "placement": "primary",
           "page": {
             "kind": "route",
             "path": "/connectors"
           }
         },
         {
+          "navKey": "integrations",
+          "label": "Other integrations",
+          "icon": "Blocks",
+          "placement": "primary",
+          "page": {
+            "kind": "route",
+            "path": "/settings/integrations"
+          }
+        },
+        {
           "navKey": "custom_data",
           "label": "Data types",
           "icon": "Database",
-          "placement": "advanced",
+          "placement": "primary",
           "page": {
             "kind": "route",
             "path": "/custom-data"
@@ -673,7 +673,7 @@
           "navKey": "semantic_studio",
           "label": "Graph model",
           "icon": "Network",
-          "placement": "advanced",
+          "placement": "primary",
           "page": {
             "kind": "route",
             "path": "/semantic?tab=bridges"
@@ -683,7 +683,7 @@
           "navKey": "component_studio",
           "label": "Components",
           "icon": "PanelsTopLeft",
-          "placement": "advanced",
+          "placement": "primary",
           "page": {
             "kind": "route",
             "path": "/components"
@@ -693,7 +693,7 @@
           "navKey": "composed_pages",
           "label": "Pages",
           "icon": "Files",
-          "placement": "advanced",
+          "placement": "primary",
           "page": {
             "kind": "route",
             "path": "/pages"
