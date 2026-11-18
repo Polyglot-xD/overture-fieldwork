@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "title": "Your partner research desk",
-  "description": "A place-based research queue for wholesale roasters, bakery suppliers, and neighborhood partnership teams.",
+  "title": "Coffee & Counter workspace",
+  "description": "Source coverage and your team’s research progress.",
   "tiles": [
     {
       "id": "intro",
       "kind": "text",
-      "title": "From a map pin to a useful conversation",
-      "content": "Start with a real venue, keep the evidence, make a deliberate shortlist.\n\nChoose Explore places in the sidebar to find a venue. Open its row to inspect the website, map location and source evidence. Use Update review status to shortlist it, or Replace research notes to save what your team learned. Editors can save changes; invited reviewers have read-only access.\n\nYour shortlist appears below once an editor saves a shortlisted decision. A shortlist is a research decision, not evidence of buying intent or supplier fit.",
+      "title": "Choose a task, then make a deliberate decision",
+      "content": "Explore places brings the map, venue list and source evidence into one workspace.\n\nSupplier prospects: research coffee, cafe and bakery venues before proposing a relevant supply conversation.\nNeighborhood partners: compare public business context while planning an event or collaboration.\nField research: confirm the basics, plan a visit and keep the observations with the place.\n\nUse Team shortlist for selected places and Field visits for internal plans. Category, registration and proximity never prove buying intent or partner fit.",
       "layout": {
         "x": 0,
         "y": 0,
@@ -61,7 +61,7 @@
     {
       "id": "shortlisted",
       "kind": "stat",
-      "title": "Your shortlist",
+      "title": "Team shortlist",
       "dataSource": {
         "kind": "workspace_record_count",
         "typeKey": "fieldwork_place",
@@ -152,7 +152,7 @@
       "id": "review_rules",
       "kind": "text",
       "title": "A review status that means something",
-      "content": "Unreviewed: source data only. Verify first: a current fact is missing or uncertain. Shortlisted: worth further partner research. Visited: your team actually visited. Passed: your team decided to skip.\n\nWrite the reason in research notes. Leave verification dates empty until checked. This dataset does not guarantee opening hours, ownership, purchasing activity or partnership intent.",
+      "content": "Unreviewed: source data only. Verify first: an important fact needs checking. Shortlisted: worth further research. Visited: your team completed a visit. Passed: your team chose to skip.\n\nA visit plan is not a booking. A public source is an observation, not a team decision. Keep the evidence behind your next step in research or verification notes.",
       "layout": {
         "x": 0,
         "y": 9,

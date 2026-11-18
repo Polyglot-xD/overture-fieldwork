@@ -1,0 +1,9 @@
+query SelectedPlaceContext($id: String!) {
+  workspaceCustomRecord(recordId: $id) {
+    recordId
+    registrations: graphEdge(fieldKey: "nearbyRegistrations", limit: 10) { ok error remoteNodes }
+    legacy: graphEdge(fieldKey: "nearbyLegacyBusinesses", limit: 8) { ok error remoteNodes }
+    stops: graphEdge(fieldKey: "nearbyTransitStops", limit: 8) { ok error remoteNodes }
+    neighborhood: graphEdge(fieldKey: "analysisNeighborhood", limit: 2) { ok error remoteNodes }
+  }
+}

@@ -2,7 +2,8 @@
   {
     "actionKey": "fieldwork.review_status",
     "channel": "workspace",
-    "displayName": "Update review status",
+    "displayName": "Update review",
+    "description": "Update review",
     "semanticCapability": "workspace.record.put",
     "inputSchema": {
       "type": "object",
@@ -17,7 +18,7 @@
         "review_status": {
           "type": "string",
           "title": "Team review",
-          "description": "Shortlisted means worth further research; visited means your team actually visited.",
+          "description": "Shortlisted means worth further research. Choose visited only after your team actually visited.",
           "enum": [
             "unreviewed",
             "verify_first",
@@ -45,7 +46,8 @@
   {
     "actionKey": "fieldwork.research_notes",
     "channel": "workspace",
-    "displayName": "Replace research notes",
+    "displayName": "Edit research notes",
+    "description": "Edit research notes",
     "semanticCapability": "workspace.record.put",
     "inputSchema": {
       "type": "object",
@@ -60,14 +62,308 @@
         "research_notes": {
           "type": "string",
           "title": "Research notes",
-          "description": "Replaces this place’s current notes. Keep source observations and assumptions distinct.",
+          "description": "Replaces the current notes. Preserve useful existing context when editing.",
           "minLength": 1,
-          "maxLength": 4000
+          "maxLength": 4000,
+          "format": "textarea"
         }
       },
       "required": [
         "record_id",
         "research_notes"
+      ],
+      "additionalProperties": false
+    },
+    "outcomeEvents": [
+      "workspace.record.saved"
+    ],
+    "hardGuards": [
+      "target_type:fieldwork_place",
+      "existing_record_only"
+    ],
+    "capabilityGated": true
+  },
+  {
+    "actionKey": "fieldwork.next_step",
+    "channel": "workspace",
+    "displayName": "Set next step",
+    "description": "Set next step",
+    "semanticCapability": "workspace.record.put",
+    "inputSchema": {
+      "type": "object",
+      "xGyriTargetTypeKey": "fieldwork_place",
+      "xGyriExistingRecordIdField": "record_id",
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "title": "Selected place",
+          "minLength": 1
+        },
+        "next_action": {
+          "type": "string",
+          "title": "Next step",
+          "description": "A specific internal research step, such as verify the address or compare the menu.",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "owner": {
+          "type": "string",
+          "title": "Research owner",
+          "description": "Optional person on your team. Leaving this untouched preserves the current owner.",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "record_id",
+        "next_action"
+      ],
+      "additionalProperties": false
+    },
+    "outcomeEvents": [
+      "workspace.record.saved"
+    ],
+    "hardGuards": [
+      "target_type:fieldwork_place",
+      "existing_record_only"
+    ],
+    "capabilityGated": true
+  },
+  {
+    "actionKey": "fieldwork.research_focus",
+    "channel": "workspace",
+    "displayName": "Set research purpose",
+    "description": "Set research purpose",
+    "semanticCapability": "workspace.record.put",
+    "inputSchema": {
+      "type": "object",
+      "xGyriTargetTypeKey": "fieldwork_place",
+      "xGyriExistingRecordIdField": "record_id",
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "title": "Selected place",
+          "minLength": 1
+        },
+        "research_focus": {
+          "type": "string",
+          "title": "Research purpose",
+          "enum": [
+            "supplier",
+            "neighborhood",
+            "field_visit"
+          ]
+        }
+      },
+      "required": [
+        "record_id",
+        "research_focus"
+      ],
+      "additionalProperties": false
+    },
+    "outcomeEvents": [
+      "workspace.record.saved"
+    ],
+    "hardGuards": [
+      "target_type:fieldwork_place",
+      "existing_record_only"
+    ],
+    "capabilityGated": true
+  },
+  {
+    "actionKey": "fieldwork.plan_visit",
+    "channel": "workspace",
+    "displayName": "Plan a visit",
+    "description": "Plan a visit",
+    "semanticCapability": "workspace.record.put",
+    "inputSchema": {
+      "type": "object",
+      "xGyriTargetTypeKey": "fieldwork_place",
+      "xGyriExistingRecordIdField": "record_id",
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "title": "Selected place",
+          "minLength": 1
+        },
+        "planned_visit_at": {
+          "type": "string",
+          "title": "Local visit date and time",
+          "description": "An internal plan. Confirm opening hours separately; this is not a booking.",
+          "minLength": 1,
+          "format": "date-time"
+        },
+        "visit_status": {
+          "type": "string",
+          "enum": [
+            "planned"
+          ]
+        },
+        "visit_notes": {
+          "type": "string",
+          "title": "Visit plan",
+          "description": "Optional route, opening-hours check or things to look for. Leaving this untouched preserves current visit notes.",
+          "maxLength": 4000,
+          "format": "textarea"
+        }
+      },
+      "required": [
+        "record_id",
+        "planned_visit_at",
+        "visit_status"
+      ],
+      "additionalProperties": false
+    },
+    "outcomeEvents": [
+      "workspace.record.saved"
+    ],
+    "hardGuards": [
+      "target_type:fieldwork_place",
+      "existing_record_only"
+    ],
+    "capabilityGated": true
+  },
+  {
+    "actionKey": "fieldwork.complete_visit",
+    "channel": "workspace",
+    "displayName": "Record a completed visit",
+    "description": "Record a completed visit",
+    "semanticCapability": "workspace.record.put",
+    "inputSchema": {
+      "type": "object",
+      "xGyriTargetTypeKey": "fieldwork_place",
+      "xGyriExistingRecordIdField": "record_id",
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "title": "Selected place",
+          "minLength": 1
+        },
+        "visit_status": {
+          "type": "string",
+          "enum": [
+            "visited"
+          ]
+        },
+        "review_status": {
+          "type": "string",
+          "enum": [
+            "visited"
+          ]
+        },
+        "visit_notes": {
+          "type": "string",
+          "title": "Visit observations",
+          "description": "Record only what your team actually observed. This replaces the current visit notes.",
+          "minLength": 1,
+          "maxLength": 4000,
+          "format": "textarea"
+        }
+      },
+      "required": [
+        "record_id",
+        "visit_status",
+        "review_status",
+        "visit_notes"
+      ],
+      "additionalProperties": false
+    },
+    "outcomeEvents": [
+      "workspace.record.saved"
+    ],
+    "hardGuards": [
+      "target_type:fieldwork_place",
+      "existing_record_only"
+    ],
+    "capabilityGated": true
+  },
+  {
+    "actionKey": "fieldwork.cancel_visit",
+    "channel": "workspace",
+    "displayName": "Cancel visit plan",
+    "description": "Cancel visit plan",
+    "semanticCapability": "workspace.record.put",
+    "inputSchema": {
+      "type": "object",
+      "xGyriTargetTypeKey": "fieldwork_place",
+      "xGyriExistingRecordIdField": "record_id",
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "title": "Selected place",
+          "minLength": 1
+        },
+        "visit_status": {
+          "type": "string",
+          "enum": [
+            "cancelled"
+          ]
+        }
+      },
+      "required": [
+        "record_id",
+        "visit_status"
+      ],
+      "additionalProperties": false
+    },
+    "outcomeEvents": [
+      "workspace.record.saved"
+    ],
+    "hardGuards": [
+      "target_type:fieldwork_place",
+      "existing_record_only"
+    ],
+    "capabilityGated": true
+  },
+  {
+    "actionKey": "fieldwork.verification",
+    "channel": "workspace",
+    "displayName": "Record an evidence check",
+    "description": "Record an evidence check",
+    "semanticCapability": "workspace.record.put",
+    "inputSchema": {
+      "type": "object",
+      "xGyriTargetTypeKey": "fieldwork_place",
+      "xGyriExistingRecordIdField": "record_id",
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "title": "Selected place",
+          "minLength": 1
+        },
+        "verification_status": {
+          "type": "string",
+          "title": "Check result",
+          "enum": [
+            "checked",
+            "mismatch"
+          ]
+        },
+        "verification_source_url": {
+          "type": "string",
+          "title": "Source checked",
+          "description": "The URL you actually inspected.",
+          "minLength": 1
+        },
+        "verification_notes": {
+          "type": "string",
+          "title": "What you checked",
+          "description": "Explain the identity, address or website evidence and any mismatch. A check is not proof of supplier fit.",
+          "minLength": 1,
+          "maxLength": 4000,
+          "format": "textarea"
+        },
+        "last_verified_at": {
+          "type": "string",
+          "title": "Actual check date and time",
+          "description": "Optional actual check time. Leave this untouched if you are not recording a date.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "record_id",
+        "verification_status",
+        "verification_source_url",
+        "verification_notes"
       ],
       "additionalProperties": false
     },

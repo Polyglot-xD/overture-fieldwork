@@ -1,0 +1,1018 @@
+{
+  "schemaVersion": 2,
+  "moduleId": "gyri.module:fieldwork-public-context",
+  "name": "Fieldwork public place context",
+  "version": "0.1.0",
+  "description": "On-demand live federation from selected places to nearby public business registrations, legacy businesses, static Muni stop inventory and analysis neighborhoods. No business records are copied or scored.",
+  "tags": [
+    "native",
+    "federation",
+    "places",
+    "public-data",
+    "socrata",
+    "arcgis"
+  ],
+  "readme": "Install after Overture Fieldwork. On-demand source observations support research and field visits. Tax registration is not business openness; proximity is not entity matching; transit inventory is not real-time service; analysis neighborhoods are not official boundaries. DataSF datasets are PDDL 1.0; official Legacy Registry source exposes no explicit license, so federation retains attribution and no registry snapshot is redistributed.",
+  "integrations": [
+    {
+      "integrationKey": "datasf_context",
+      "kind": "http_rest",
+      "provision": {
+        "name": "DataSF public place context",
+        "baseUrl": "https://data.sf.gov",
+        "authMode": "none",
+        "operations": [
+          {
+            "id": "nearby_registrations",
+            "method": "GET",
+            "pathTemplate": "/resource/g8m3-pdis.json",
+            "requiredVariables": [
+              "where",
+              "select"
+            ],
+            "queryMap": {
+              "where": "$where",
+              "select": "$select",
+              "offset": "$offset"
+            },
+            "queryStatic": {
+              "$limit": "10",
+              "$order": "distance_m ASC,uniqueid ASC"
+            },
+            "querySuppressVariablePassthrough": true,
+            "mutating": false,
+            "discovery": {
+              "capabilityKey": "place.context.business_registration.nearby",
+              "title": "Nearby city tax registrations",
+              "description": "At most ten nearest public tax-location records within 100 metres; includes historic records; not an identity or openness guarantee.",
+              "access": "read",
+              "authority": "live",
+              "freshness": "live",
+              "outputConcept": "business_registration_live"
+            }
+          },
+          {
+            "id": "nearby_transit_stops",
+            "method": "GET",
+            "pathTemplate": "/resource/i28k-bkz6.json",
+            "requiredVariables": [
+              "where",
+              "select"
+            ],
+            "queryMap": {
+              "where": "$where",
+              "select": "$select",
+              "offset": "$offset"
+            },
+            "queryStatic": {
+              "$limit": "8",
+              "$order": "distance_m ASC,stopid ASC"
+            },
+            "querySuppressVariablePassthrough": true,
+            "mutating": false,
+            "discovery": {
+              "capabilityKey": "place.context.transit_stop.nearby",
+              "title": "Nearby Muni stop inventory",
+              "description": "At most eight nearest stop inventory locations within 400 metres. This is the latest published static inventory, not current arrivals or walking accessibility.",
+              "access": "read",
+              "authority": "live",
+              "freshness": "historical",
+              "outputConcept": "transit_stop_live"
+            }
+          },
+          {
+            "id": "analysis_neighborhood",
+            "method": "GET",
+            "pathTemplate": "/resource/j2bu-swwd.json",
+            "requiredVariables": [
+              "where"
+            ],
+            "queryMap": {
+              "where": "$where"
+            },
+            "queryStatic": {
+              "$select": "nhood",
+              "$limit": "2",
+              "$order": "nhood ASC"
+            },
+            "querySuppressVariablePassthrough": true,
+            "mutating": false,
+            "discovery": {
+              "capabilityKey": "place.context.neighborhood.containing",
+              "title": "Containing analysis neighborhood",
+              "description": "Static census-tract analysis grouping, not an official or legal neighborhood designation.",
+              "access": "read",
+              "authority": "live",
+              "freshness": "historical",
+              "outputConcept": "neighborhood_area_live"
+            }
+          },
+          {
+            "id": "dataset_metadata",
+            "method": "GET",
+            "pathTemplate": "/api/views/{{dataset_id}}.json",
+            "requiredVariables": [
+              "dataset_id"
+            ],
+            "querySuppressVariablePassthrough": true,
+            "mutating": false,
+            "discovery": {
+              "capabilityKey": "open_data.source.metadata.read",
+              "title": "DataSF dataset metadata",
+              "access": "read",
+              "authority": "live",
+              "freshness": "live"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "integrationKey": "sf_legacy_context",
+      "kind": "http_rest",
+      "provision": {
+        "name": "San Francisco Legacy Business Registry",
+        "baseUrl": "https://services.arcgis.com/Zs2aNLFN00jrS4gG",
+        "authMode": "none",
+        "operations": [
+          {
+            "id": "nearby_legacy_businesses",
+            "method": "GET",
+            "pathTemplate": "/arcgis/rest/services/legacy_biz/FeatureServer/0/query",
+            "requiredVariables": [
+              "geometry"
+            ],
+            "queryMap": {
+              "geometry": "geometry",
+              "offset": "resultOffset"
+            },
+            "queryStatic": {
+              "f": "json",
+              "where": "Status IN ('Legacy Business: Active','Legacy Business: Active, In Transition')",
+              "geometryType": "esriGeometryPoint",
+              "inSR": "4326",
+              "spatialRel": "esriSpatialRelIntersects",
+              "distance": "500",
+              "units": "esriSRUnit_Meter",
+              "outSR": "4326",
+              "outFields": "OBJECTID,Website_Business_Name,Location_Business_Name,Legacy_Business_Location__Street_Address,Business_Type,Neighborhood,Status,Established_Date,Business_Website",
+              "returnGeometry": "true",
+              "resultRecordCount": "8",
+              "orderByFields": "OBJECTID ASC"
+            },
+            "querySuppressVariablePassthrough": true,
+            "mutating": false,
+            "discovery": {
+              "capabilityKey": "place.context.community_business.nearby",
+              "title": "Nearby official Legacy Business Registry places",
+              "description": "At most eight registry locations within 500 metres, source status active or in transition. Nearby results do not establish this venue is a legacy business.",
+              "access": "read",
+              "authority": "live",
+              "freshness": "live",
+              "outputConcept": "community_business_live"
+            }
+          },
+          {
+            "id": "registry_metadata",
+            "method": "GET",
+            "pathTemplate": "/arcgis/rest/services/legacy_biz/FeatureServer/0",
+            "queryStatic": {
+              "f": "json"
+            },
+            "querySuppressVariablePassthrough": true,
+            "mutating": false,
+            "discovery": {
+              "capabilityKey": "open_data.source.metadata.read",
+              "title": "Official Legacy Registry layer metadata",
+              "access": "read",
+              "authority": "live",
+              "freshness": "live"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "customTypes": [
+    {
+      "typeKey": "business_registration_live",
+      "storage": "remote",
+      "displayName": "Nearby city business registration",
+      "fieldSchema": {
+        "remote": {
+          "idField": "uniqueid"
+        },
+        "description": "Public city tax-location observations. Nearby candidates may be a different entity at the same building. No owner names or mailing addresses are requested.",
+        "fields": [
+          {
+            "name": "external_id",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "source_url",
+            "type": "string"
+          },
+          {
+            "name": "source_system",
+            "type": "string"
+          },
+          {
+            "name": "data_as_of",
+            "type": "string"
+          },
+          {
+            "name": "source_loaded_at",
+            "type": "string"
+          },
+          {
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "type": "string"
+          },
+          {
+            "name": "region",
+            "type": "string"
+          },
+          {
+            "name": "postcode",
+            "type": "string"
+          },
+          {
+            "name": "latitude",
+            "type": "number"
+          },
+          {
+            "name": "longitude",
+            "type": "number"
+          },
+          {
+            "name": "distance_m",
+            "type": "number"
+          },
+          {
+            "name": "location_start_date",
+            "type": "string"
+          },
+          {
+            "name": "location_end_date",
+            "type": "string"
+          },
+          {
+            "name": "business_start_date",
+            "type": "string"
+          },
+          {
+            "name": "business_end_date",
+            "type": "string"
+          },
+          {
+            "name": "administratively_closed",
+            "type": "string"
+          },
+          {
+            "name": "industry_code",
+            "type": "string"
+          },
+          {
+            "name": "business_corridor",
+            "type": "string"
+          },
+          {
+            "name": "neighborhood",
+            "type": "string"
+          }
+        ],
+        "summaryFields": [
+          "name",
+          "address"
+        ],
+        "contextProfile": {
+          "alwaysSurfaceFields": [
+            "name",
+            "source_url",
+            "data_as_of"
+          ]
+        }
+      }
+    },
+    {
+      "typeKey": "transit_stop_live",
+      "storage": "remote",
+      "displayName": "Nearby transit stop inventory",
+      "fieldSchema": {
+        "remote": {
+          "idField": "stopid"
+        },
+        "description": "Published Muni stop inventory locations. Dataset source-as-of must remain visible; not arrivals, walking directions or accessibility certification.",
+        "fields": [
+          {
+            "name": "external_id",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "source_url",
+            "type": "string"
+          },
+          {
+            "name": "source_system",
+            "type": "string"
+          },
+          {
+            "name": "data_as_of",
+            "type": "string"
+          },
+          {
+            "name": "source_loaded_at",
+            "type": "string"
+          },
+          {
+            "name": "latitude",
+            "type": "number"
+          },
+          {
+            "name": "longitude",
+            "type": "number"
+          },
+          {
+            "name": "distance_m",
+            "type": "number"
+          },
+          {
+            "name": "on_street",
+            "type": "string"
+          },
+          {
+            "name": "at_street",
+            "type": "string"
+          },
+          {
+            "name": "orientation",
+            "type": "string"
+          },
+          {
+            "name": "shelter",
+            "type": "string"
+          }
+        ],
+        "summaryFields": [
+          "name"
+        ],
+        "contextProfile": {
+          "alwaysSurfaceFields": [
+            "name",
+            "source_url",
+            "data_as_of"
+          ]
+        }
+      }
+    },
+    {
+      "typeKey": "community_business_live",
+      "storage": "remote",
+      "displayName": "Nearby Legacy Business Registry location",
+      "fieldSchema": {
+        "remote": {
+          "idField": "attributes.OBJECTID"
+        },
+        "description": "Official city Legacy Business Registry locations near the selected venue. Registry program status is not a commercial-fit, current-open or purchasing-intent claim. Spatial proximity does not match identities.",
+        "fields": [
+          {
+            "name": "external_id",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "source_url",
+            "type": "string"
+          },
+          {
+            "name": "source_system",
+            "type": "string"
+          },
+          {
+            "name": "data_as_of",
+            "type": "string"
+          },
+          {
+            "name": "source_loaded_at",
+            "type": "string"
+          },
+          {
+            "name": "location_name",
+            "type": "string"
+          },
+          {
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "name": "business_type",
+            "type": "string"
+          },
+          {
+            "name": "neighborhood",
+            "type": "string"
+          },
+          {
+            "name": "source_status",
+            "type": "string"
+          },
+          {
+            "name": "established_date",
+            "type": "string"
+          },
+          {
+            "name": "website",
+            "type": "string"
+          },
+          {
+            "name": "latitude",
+            "type": "number"
+          },
+          {
+            "name": "longitude",
+            "type": "number"
+          }
+        ],
+        "summaryFields": [
+          "name",
+          "address"
+        ],
+        "contextProfile": {
+          "alwaysSurfaceFields": [
+            "name",
+            "source_url",
+            "data_as_of"
+          ]
+        }
+      }
+    },
+    {
+      "typeKey": "neighborhood_area_live",
+      "storage": "remote",
+      "displayName": "Analysis neighborhood grouping",
+      "fieldSchema": {
+        "remote": {
+          "idField": "nhood"
+        },
+        "description": "Static San Francisco analysis neighborhood grouping of census tracts. This is a spatial analysis aid, not an official neighborhood boundary or a demographic/fit score.",
+        "fields": [
+          {
+            "name": "external_id",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "source_url",
+            "type": "string"
+          },
+          {
+            "name": "source_system",
+            "type": "string"
+          },
+          {
+            "name": "data_as_of",
+            "type": "string"
+          },
+          {
+            "name": "source_loaded_at",
+            "type": "string"
+          }
+        ],
+        "summaryFields": [
+          "name"
+        ],
+        "contextProfile": {
+          "alwaysSurfaceFields": [
+            "name",
+            "source_url",
+            "data_as_of"
+          ]
+        }
+      }
+    },
+    {
+      "typeKey": "fieldwork_context_area",
+      "storage": "kb",
+      "displayName": "Fieldwork context area",
+      "fieldSchema": {
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "latitude",
+            "type": "number"
+          },
+          {
+            "name": "longitude",
+            "type": "number"
+          }
+        ],
+        "summaryFields": [
+          "name"
+        ],
+        "uniqueFields": [
+          "name"
+        ]
+      }
+    }
+  ],
+  "bridges": [
+    {
+      "bridgeKey": "fieldwork_place_nearby_registrations",
+      "fromTypeKey": "fieldwork_place",
+      "edgeKind": "nearby_registrations",
+      "strategy": "http_operation",
+      "config": {
+        "graphqlFieldKey": "nearbyRegistrations",
+        "targetTypeKey": "business_registration_live",
+        "integrationKey": "datasf_context",
+        "operationId": "nearby_registrations",
+        "isCollection": true,
+        "responseMap": {
+          "external_id": "uniqueid",
+          "name": "dba_name",
+          "address": "full_business_address",
+          "city": "city",
+          "region": "state",
+          "postcode": "business_zip",
+          "latitude": "location.coordinates.1",
+          "longitude": "location.coordinates.0",
+          "distance_m": "distance_m",
+          "location_start_date": "location_start_date",
+          "location_end_date": "location_end_date",
+          "business_start_date": "dba_start_date",
+          "business_end_date": "dba_end_date",
+          "administratively_closed": "administratively_closed",
+          "industry_code": "self_reported_naics_code",
+          "business_corridor": "business_corridor",
+          "neighborhood": "neighborhoods_analysis_boundaries",
+          "data_as_of": "data_as_of",
+          "source_loaded_at": "data_loaded_at",
+          "source_url": {
+            "literal": "https://data.sf.gov/d/g8m3-pdis"
+          },
+          "source_system": {
+            "literal": "San Francisco Treasurer & Tax Collector / DataSF"
+          }
+        },
+        "variableMap": {
+          "where": {
+            "template": "within_circle(location,${body.latitude},${body.longitude},100)"
+          },
+          "select": {
+            "template": "uniqueid,dba_name,full_business_address,city,state,business_zip,location_start_date,location_end_date,dba_start_date,dba_end_date,administratively_closed,self_reported_naics_code,business_corridor,neighborhoods_analysis_boundaries,data_as_of,data_loaded_at,location,distance_in_meters(location,'POINT(${body.longitude} ${body.latitude})') AS distance_m"
+          }
+        },
+        "requiredSourcePaths": [
+          "body.latitude",
+          "body.longitude"
+        ],
+        "includeRaw": false,
+        "limit": 10,
+        "agentNotes": "Read on explicit selected-place context request. Do not fetch for every place on initial page load. Nearby source rows are evidence candidates; never automatically merge identities or overwrite human review fields. Errors mean unavailable, not absence.",
+        "rateLimits": [
+          {
+            "maxRequests": 3,
+            "windowSeconds": 1,
+            "scope": "workspace"
+          },
+          {
+            "maxRequests": 500,
+            "windowSeconds": 3600,
+            "scope": "workspace"
+          }
+        ],
+        "crossCluster": true
+      }
+    },
+    {
+      "bridgeKey": "fieldwork_place_nearby_transit_stops",
+      "fromTypeKey": "fieldwork_place",
+      "edgeKind": "nearby_transit_stops",
+      "strategy": "http_operation",
+      "config": {
+        "graphqlFieldKey": "nearbyTransitStops",
+        "targetTypeKey": "transit_stop_live",
+        "integrationKey": "datasf_context",
+        "operationId": "nearby_transit_stops",
+        "isCollection": true,
+        "responseMap": {
+          "external_id": "stopid",
+          "name": "stopname",
+          "latitude": "latitude",
+          "longitude": "longitude",
+          "distance_m": "distance_m",
+          "on_street": "onstreet",
+          "at_street": "atstreet",
+          "orientation": "orientation",
+          "shelter": "shelter",
+          "data_as_of": "data_as_of",
+          "source_loaded_at": "data_loaded_at",
+          "source_url": {
+            "literal": "https://data.sf.gov/d/i28k-bkz6"
+          },
+          "source_system": {
+            "literal": "San Francisco Municipal Transportation Agency / DataSF"
+          }
+        },
+        "variableMap": {
+          "where": {
+            "template": "within_circle(shape,${body.latitude},${body.longitude},400)"
+          },
+          "select": {
+            "template": "stopid,stopname,latitude,longitude,onstreet,atstreet,orientation,shelter,data_as_of,data_loaded_at,distance_in_meters(shape,'POINT(${body.longitude} ${body.latitude})') AS distance_m"
+          }
+        },
+        "requiredSourcePaths": [
+          "body.latitude",
+          "body.longitude"
+        ],
+        "includeRaw": false,
+        "limit": 8,
+        "agentNotes": "Read on explicit selected-place context request. Do not fetch for every place on initial page load. Nearby source rows are evidence candidates; never automatically merge identities or overwrite human review fields. Errors mean unavailable, not absence.",
+        "rateLimits": [
+          {
+            "maxRequests": 3,
+            "windowSeconds": 1,
+            "scope": "workspace"
+          },
+          {
+            "maxRequests": 500,
+            "windowSeconds": 3600,
+            "scope": "workspace"
+          }
+        ],
+        "crossCluster": true
+      }
+    },
+    {
+      "bridgeKey": "fieldwork_place_nearby_legacy_businesses",
+      "fromTypeKey": "fieldwork_place",
+      "edgeKind": "nearby_legacy_businesses",
+      "strategy": "http_operation",
+      "config": {
+        "graphqlFieldKey": "nearbyLegacyBusinesses",
+        "targetTypeKey": "community_business_live",
+        "integrationKey": "sf_legacy_context",
+        "operationId": "nearby_legacy_businesses",
+        "isCollection": true,
+        "responseMap": {
+          "external_id": "attributes.OBJECTID",
+          "name": "attributes.Website_Business_Name",
+          "location_name": "attributes.Location_Business_Name",
+          "address": "attributes.Legacy_Business_Location__Street_Address",
+          "business_type": "attributes.Business_Type",
+          "neighborhood": "attributes.Neighborhood",
+          "source_status": "attributes.Status",
+          "established_date": "attributes.Established_Date",
+          "website": "attributes.Business_Website",
+          "latitude": "geometry.y",
+          "longitude": "geometry.x",
+          "source_url": {
+            "literal": "https://sfgov.maps.arcgis.com/apps/dashboards/471cc5798f8c486fb0f8e9ac8badaf03"
+          },
+          "source_system": {
+            "literal": "San Francisco Office of Small Business / Legacy Business Registry"
+          }
+        },
+        "variableMap": {
+          "geometry": {
+            "template": "${body.longitude},${body.latitude}"
+          }
+        },
+        "requiredSourcePaths": [
+          "body.latitude",
+          "body.longitude"
+        ],
+        "includeRaw": false,
+        "limit": 8,
+        "agentNotes": "Read on explicit selected-place context request. Do not fetch for every place on initial page load. Nearby source rows are evidence candidates; never automatically merge identities or overwrite human review fields. Errors mean unavailable, not absence.",
+        "rateLimits": [
+          {
+            "maxRequests": 3,
+            "windowSeconds": 1,
+            "scope": "workspace"
+          },
+          {
+            "maxRequests": 500,
+            "windowSeconds": 3600,
+            "scope": "workspace"
+          }
+        ],
+        "responseItemsPath": "features",
+        "crossCluster": true
+      }
+    },
+    {
+      "bridgeKey": "fieldwork_place_analysis_neighborhood",
+      "fromTypeKey": "fieldwork_place",
+      "edgeKind": "analysis_neighborhood",
+      "strategy": "http_operation",
+      "config": {
+        "graphqlFieldKey": "analysisNeighborhood",
+        "targetTypeKey": "neighborhood_area_live",
+        "integrationKey": "datasf_context",
+        "operationId": "analysis_neighborhood",
+        "isCollection": true,
+        "responseMap": {
+          "external_id": "nhood",
+          "name": "nhood",
+          "source_url": {
+            "literal": "https://data.sf.gov/d/j2bu-swwd"
+          },
+          "source_system": {
+            "literal": "San Francisco Planning Department / DataSF"
+          }
+        },
+        "variableMap": {
+          "where": {
+            "template": "intersects(the_geom,'POINT(${body.longitude} ${body.latitude})')"
+          }
+        },
+        "requiredSourcePaths": [
+          "body.latitude",
+          "body.longitude"
+        ],
+        "includeRaw": false,
+        "limit": 2,
+        "agentNotes": "Read on explicit selected-place context request. Do not fetch for every place on initial page load. Nearby source rows are evidence candidates; never automatically merge identities or overwrite human review fields. Errors mean unavailable, not absence.",
+        "rateLimits": [
+          {
+            "maxRequests": 3,
+            "windowSeconds": 1,
+            "scope": "workspace"
+          },
+          {
+            "maxRequests": 500,
+            "windowSeconds": 3600,
+            "scope": "workspace"
+          }
+        ],
+        "crossCluster": true
+      }
+    },
+    {
+      "bridgeKey": "fieldwork_context_area_nearby_registrations",
+      "fromTypeKey": "fieldwork_context_area",
+      "edgeKind": "nearby_registrations",
+      "strategy": "http_operation",
+      "config": {
+        "graphqlFieldKey": "areaNearbyRegistrations",
+        "targetTypeKey": "business_registration_live",
+        "integrationKey": "datasf_context",
+        "operationId": "nearby_registrations",
+        "isCollection": true,
+        "responseMap": {
+          "external_id": "uniqueid",
+          "name": "dba_name",
+          "address": "full_business_address",
+          "city": "city",
+          "region": "state",
+          "postcode": "business_zip",
+          "latitude": "location.coordinates.1",
+          "longitude": "location.coordinates.0",
+          "distance_m": "distance_m",
+          "location_start_date": "location_start_date",
+          "location_end_date": "location_end_date",
+          "business_start_date": "dba_start_date",
+          "business_end_date": "dba_end_date",
+          "administratively_closed": "administratively_closed",
+          "industry_code": "self_reported_naics_code",
+          "business_corridor": "business_corridor",
+          "neighborhood": "neighborhoods_analysis_boundaries",
+          "data_as_of": "data_as_of",
+          "source_loaded_at": "data_loaded_at",
+          "source_url": {
+            "literal": "https://data.sf.gov/d/g8m3-pdis"
+          },
+          "source_system": {
+            "literal": "San Francisco Treasurer & Tax Collector / DataSF"
+          }
+        },
+        "variableMap": {
+          "where": {
+            "template": "within_circle(location,${body.latitude},${body.longitude},100)"
+          },
+          "select": {
+            "template": "uniqueid,dba_name,full_business_address,city,state,business_zip,location_start_date,location_end_date,dba_start_date,dba_end_date,administratively_closed,self_reported_naics_code,business_corridor,neighborhoods_analysis_boundaries,data_as_of,data_loaded_at,location,distance_in_meters(location,'POINT(${body.longitude} ${body.latitude})') AS distance_m"
+          }
+        },
+        "requiredSourcePaths": [
+          "body.latitude",
+          "body.longitude"
+        ],
+        "includeRaw": false,
+        "limit": 10,
+        "agentNotes": "Read on explicit selected-place context request. Do not fetch for every place on initial page load. Nearby source rows are evidence candidates; never automatically merge identities or overwrite human review fields. Errors mean unavailable, not absence.",
+        "rateLimits": [
+          {
+            "maxRequests": 3,
+            "windowSeconds": 1,
+            "scope": "workspace"
+          },
+          {
+            "maxRequests": 500,
+            "windowSeconds": 3600,
+            "scope": "workspace"
+          }
+        ]
+      }
+    },
+    {
+      "bridgeKey": "fieldwork_context_area_nearby_transit_stops",
+      "fromTypeKey": "fieldwork_context_area",
+      "edgeKind": "nearby_transit_stops",
+      "strategy": "http_operation",
+      "config": {
+        "graphqlFieldKey": "areaNearbyTransitStops",
+        "targetTypeKey": "transit_stop_live",
+        "integrationKey": "datasf_context",
+        "operationId": "nearby_transit_stops",
+        "isCollection": true,
+        "responseMap": {
+          "external_id": "stopid",
+          "name": "stopname",
+          "latitude": "latitude",
+          "longitude": "longitude",
+          "distance_m": "distance_m",
+          "on_street": "onstreet",
+          "at_street": "atstreet",
+          "orientation": "orientation",
+          "shelter": "shelter",
+          "data_as_of": "data_as_of",
+          "source_loaded_at": "data_loaded_at",
+          "source_url": {
+            "literal": "https://data.sf.gov/d/i28k-bkz6"
+          },
+          "source_system": {
+            "literal": "San Francisco Municipal Transportation Agency / DataSF"
+          }
+        },
+        "variableMap": {
+          "where": {
+            "template": "within_circle(shape,${body.latitude},${body.longitude},400)"
+          },
+          "select": {
+            "template": "stopid,stopname,latitude,longitude,onstreet,atstreet,orientation,shelter,data_as_of,data_loaded_at,distance_in_meters(shape,'POINT(${body.longitude} ${body.latitude})') AS distance_m"
+          }
+        },
+        "requiredSourcePaths": [
+          "body.latitude",
+          "body.longitude"
+        ],
+        "includeRaw": false,
+        "limit": 8,
+        "agentNotes": "Read on explicit selected-place context request. Do not fetch for every place on initial page load. Nearby source rows are evidence candidates; never automatically merge identities or overwrite human review fields. Errors mean unavailable, not absence.",
+        "rateLimits": [
+          {
+            "maxRequests": 3,
+            "windowSeconds": 1,
+            "scope": "workspace"
+          },
+          {
+            "maxRequests": 500,
+            "windowSeconds": 3600,
+            "scope": "workspace"
+          }
+        ]
+      }
+    },
+    {
+      "bridgeKey": "fieldwork_context_area_nearby_legacy_businesses",
+      "fromTypeKey": "fieldwork_context_area",
+      "edgeKind": "nearby_legacy_businesses",
+      "strategy": "http_operation",
+      "config": {
+        "graphqlFieldKey": "areaNearbyLegacyBusinesses",
+        "targetTypeKey": "community_business_live",
+        "integrationKey": "sf_legacy_context",
+        "operationId": "nearby_legacy_businesses",
+        "isCollection": true,
+        "responseMap": {
+          "external_id": "attributes.OBJECTID",
+          "name": "attributes.Website_Business_Name",
+          "location_name": "attributes.Location_Business_Name",
+          "address": "attributes.Legacy_Business_Location__Street_Address",
+          "business_type": "attributes.Business_Type",
+          "neighborhood": "attributes.Neighborhood",
+          "source_status": "attributes.Status",
+          "established_date": "attributes.Established_Date",
+          "website": "attributes.Business_Website",
+          "latitude": "geometry.y",
+          "longitude": "geometry.x",
+          "source_url": {
+            "literal": "https://sfgov.maps.arcgis.com/apps/dashboards/471cc5798f8c486fb0f8e9ac8badaf03"
+          },
+          "source_system": {
+            "literal": "San Francisco Office of Small Business / Legacy Business Registry"
+          }
+        },
+        "variableMap": {
+          "geometry": {
+            "template": "${body.longitude},${body.latitude}"
+          }
+        },
+        "requiredSourcePaths": [
+          "body.latitude",
+          "body.longitude"
+        ],
+        "includeRaw": false,
+        "limit": 8,
+        "agentNotes": "Read on explicit selected-place context request. Do not fetch for every place on initial page load. Nearby source rows are evidence candidates; never automatically merge identities or overwrite human review fields. Errors mean unavailable, not absence.",
+        "rateLimits": [
+          {
+            "maxRequests": 3,
+            "windowSeconds": 1,
+            "scope": "workspace"
+          },
+          {
+            "maxRequests": 500,
+            "windowSeconds": 3600,
+            "scope": "workspace"
+          }
+        ],
+        "responseItemsPath": "features"
+      }
+    },
+    {
+      "bridgeKey": "fieldwork_context_area_analysis_neighborhood",
+      "fromTypeKey": "fieldwork_context_area",
+      "edgeKind": "analysis_neighborhood",
+      "strategy": "http_operation",
+      "config": {
+        "graphqlFieldKey": "areaAnalysisNeighborhood",
+        "targetTypeKey": "neighborhood_area_live",
+        "integrationKey": "datasf_context",
+        "operationId": "analysis_neighborhood",
+        "isCollection": true,
+        "responseMap": {
+          "external_id": "nhood",
+          "name": "nhood",
+          "source_url": {
+            "literal": "https://data.sf.gov/d/j2bu-swwd"
+          },
+          "source_system": {
+            "literal": "San Francisco Planning Department / DataSF"
+          }
+        },
+        "variableMap": {
+          "where": {
+            "template": "intersects(the_geom,'POINT(${body.longitude} ${body.latitude})')"
+          }
+        },
+        "requiredSourcePaths": [
+          "body.latitude",
+          "body.longitude"
+        ],
+        "includeRaw": false,
+        "limit": 2,
+        "agentNotes": "Read on explicit selected-place context request. Do not fetch for every place on initial page load. Nearby source rows are evidence candidates; never automatically merge identities or overwrite human review fields. Errors mean unavailable, not absence.",
+        "rateLimits": [
+          {
+            "maxRequests": 3,
+            "windowSeconds": 1,
+            "scope": "workspace"
+          },
+          {
+            "maxRequests": 500,
+            "windowSeconds": 3600,
+            "scope": "workspace"
+          }
+        ]
+      }
+    }
+  ],
+  "normalizers": [],
+  "seedRecords": [
+    {
+      "seedKey": "central_sf_context_area",
+      "typeKey": "fieldwork_context_area",
+      "body": {
+        "name": "Central San Francisco context area",
+        "latitude": 37.789,
+        "longitude": -122.409
+      },
+      "installMode": "create_only"
+    }
+  ]
+}

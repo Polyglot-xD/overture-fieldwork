@@ -1,0 +1,75 @@
+[
+  {
+    "key": "registrations",
+    "fieldKey": "nearbyRegistrations",
+    "title": "Nearby city registrations",
+    "provider": "SF Treasurer & Tax Collector \u00b7 DataSF",
+    "sourceUrl": "https://data.sf.gov/d/g8m3-pdis",
+    "datasetId": "g8m3-pdis",
+    "radiusMeters": 100,
+    "limit": 10,
+    "license": "PDDL 1.0",
+    "freshness": "Requested live; provider data_as_of retained",
+    "disclaimer": "Nearby tax-location records may be historic or refer to another business. A registration is not proof this venue is currently open or that identities match.",
+    "fields": {
+      "location_start_date": "City location start",
+      "location_end_date": "City location end",
+      "business_start_date": "Business start",
+      "business_end_date": "Business end",
+      "administratively_closed": "City administrative-close flag",
+      "business_corridor": "Business corridor",
+      "neighborhood": "Analysis neighborhood",
+      "industry_code": "Self-reported NAICS code"
+    }
+  },
+  {
+    "key": "legacy",
+    "fieldKey": "nearbyLegacyBusinesses",
+    "title": "Nearby legacy businesses",
+    "provider": "SF Office of Small Business \u00b7 Official Legacy Business Registry",
+    "sourceUrl": "https://sfgov.maps.arcgis.com/apps/dashboards/471cc5798f8c486fb0f8e9ac8badaf03",
+    "radiusMeters": 500,
+    "limit": 8,
+    "license": "No explicit license supplied by the source layer; live read only",
+    "freshness": "Requested live; source layer metadata available",
+    "disclaimer": "Official registry locations within 500 m, with active or in-transition program status. Proximity does not mean the selected venue is a legacy business.",
+    "fields": {
+      "source_status": "Registry program status",
+      "established_date": "Established",
+      "business_type": "Registry business type",
+      "neighborhood": "Registry neighborhood"
+    }
+  },
+  {
+    "key": "stops",
+    "fieldKey": "nearbyTransitStops",
+    "title": "Nearby Muni stops",
+    "provider": "SFMTA \u00b7 DataSF",
+    "sourceUrl": "https://data.sf.gov/d/i28k-bkz6",
+    "datasetId": "i28k-bkz6",
+    "radiusMeters": 400,
+    "limit": 8,
+    "license": "PDDL 1.0",
+    "freshness": "Requested live from published static inventory; source data_as_of was 2026-04-08 when checked",
+    "disclaimer": "Stop inventory only. Distances are straight-line; no current arrivals, walking route, service or accessibility guarantee.",
+    "fields": {
+      "on_street": "Inventory on-street",
+      "at_street": "Inventory cross-street",
+      "orientation": "Inventory orientation",
+      "shelter": "Inventory shelter"
+    }
+  },
+  {
+    "key": "neighborhood",
+    "fieldKey": "analysisNeighborhood",
+    "title": "Analysis neighborhood",
+    "provider": "SF Planning Department \u00b7 DataSF",
+    "sourceUrl": "https://data.sf.gov/d/j2bu-swwd",
+    "datasetId": "j2bu-swwd",
+    "limit": 2,
+    "license": "PDDL 1.0",
+    "freshness": "Static analysis grouping; dataset rows last updated 2023-10-17 when checked",
+    "disclaimer": "Census-tract analysis grouping for organization and field planning. Not an official or legal neighborhood designation.",
+    "fields": {}
+  }
+]

@@ -22,6 +22,8 @@ USER_FIELDS = frozenset({
     "review_status", "research_notes", "next_action", "assignee",
     "researcher", "assigned_to", "reviewed_at", "reviewed_by",
     "owner", "last_verified_at",
+    "research_focus", "visit_status", "planned_visit_at", "visit_notes",
+    "verification_status", "verification_notes", "verification_source_url",
 })
 MUTATION = """mutation ImportOverturePlaces($inputs:[WorkspaceCustomRecordInput!]!){
   putWorkspaceCustomRecords(inputs:$inputs,partialSuccess:false){

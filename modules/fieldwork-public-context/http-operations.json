@@ -1,0 +1,168 @@
+{
+  "datasf_context": [
+    {
+      "id": "nearby_registrations",
+      "method": "GET",
+      "pathTemplate": "/resource/g8m3-pdis.json",
+      "requiredVariables": [
+        "where",
+        "select"
+      ],
+      "queryMap": {
+        "where": "$where",
+        "select": "$select",
+        "offset": "$offset"
+      },
+      "queryStatic": {
+        "$limit": "10",
+        "$order": "distance_m ASC,uniqueid ASC"
+      },
+      "querySuppressVariablePassthrough": true,
+      "mutating": false,
+      "discovery": {
+        "capabilityKey": "place.context.business_registration.nearby",
+        "title": "Nearby city tax registrations",
+        "description": "At most ten nearest public tax-location records within100metres; includes historic records; not an identity or openness guarantee.",
+        "access": "read",
+        "authority": "live",
+        "freshness": "live",
+        "outputConcept": "business_registration_live"
+      },
+      "httpTimeoutMs": 8000
+    },
+    {
+      "id": "nearby_transit_stops",
+      "method": "GET",
+      "pathTemplate": "/resource/i28k-bkz6.json",
+      "requiredVariables": [
+        "where",
+        "select"
+      ],
+      "queryMap": {
+        "where": "$where",
+        "select": "$select",
+        "offset": "$offset"
+      },
+      "queryStatic": {
+        "$limit": "8",
+        "$order": "distance_m ASC,stopid ASC"
+      },
+      "querySuppressVariablePassthrough": true,
+      "mutating": false,
+      "discovery": {
+        "capabilityKey": "place.context.transit_stop.nearby",
+        "title": "Nearby Muni stop inventory",
+        "description": "At most eight nearest stop inventory locations within400metres. This is the latest published static inventory, not current arrivals or walking accessibility.",
+        "access": "read",
+        "authority": "live",
+        "freshness": "historical",
+        "outputConcept": "transit_stop_live"
+      },
+      "httpTimeoutMs": 8000
+    },
+    {
+      "id": "analysis_neighborhood",
+      "method": "GET",
+      "pathTemplate": "/resource/j2bu-swwd.json",
+      "requiredVariables": [
+        "where"
+      ],
+      "queryMap": {
+        "where": "$where"
+      },
+      "queryStatic": {
+        "$select": "nhood",
+        "$limit": "2",
+        "$order": "nhood ASC"
+      },
+      "querySuppressVariablePassthrough": true,
+      "mutating": false,
+      "discovery": {
+        "capabilityKey": "place.context.neighborhood.containing",
+        "title": "Containing analysis neighborhood",
+        "description": "Static census-tract analysis grouping, not an official or legal neighborhood designation.",
+        "access": "read",
+        "authority": "live",
+        "freshness": "historical",
+        "outputConcept": "neighborhood_area_live"
+      },
+      "httpTimeoutMs": 8000
+    },
+    {
+      "id": "dataset_metadata",
+      "method": "GET",
+      "pathTemplate": "/api/views/{{dataset_id}}.json",
+      "requiredVariables": [
+        "dataset_id"
+      ],
+      "querySuppressVariablePassthrough": true,
+      "mutating": false,
+      "discovery": {
+        "capabilityKey": "open_data.source.metadata.read",
+        "title": "DataSF dataset metadata",
+        "access": "read",
+        "authority": "live",
+        "freshness": "live"
+      },
+      "httpTimeoutMs": 8000
+    }
+  ],
+  "sf_legacy_context": [
+    {
+      "id": "nearby_legacy_businesses",
+      "method": "GET",
+      "pathTemplate": "/arcgis/rest/services/legacy_biz/FeatureServer/0/query",
+      "requiredVariables": [
+        "geometry"
+      ],
+      "queryMap": {
+        "geometry": "geometry",
+        "offset": "resultOffset"
+      },
+      "queryStatic": {
+        "f": "json",
+        "where": "Status IN ('Legacy Business: Active','Legacy Business: Active, In Transition')",
+        "geometryType": "esriGeometryPoint",
+        "inSR": "4326",
+        "spatialRel": "esriSpatialRelIntersects",
+        "distance": "500",
+        "units": "esriSRUnit_Meter",
+        "outSR": "4326",
+        "outFields": "OBJECTID,Website_Business_Name,Location_Business_Name,Legacy_Business_Location__Street_Address,Business_Type,Neighborhood,Status,Established_Date,Business_Website",
+        "returnGeometry": "true",
+        "resultRecordCount": "8",
+        "orderByFields": "OBJECTID ASC"
+      },
+      "querySuppressVariablePassthrough": true,
+      "mutating": false,
+      "discovery": {
+        "capabilityKey": "place.context.community_business.nearby",
+        "title": "Nearby official Legacy Business Registry places",
+        "description": "At most eight registry locations within500metres, source status active or in transition. Nearby results do not establish this venue is a legacy business.",
+        "access": "read",
+        "authority": "live",
+        "freshness": "live",
+        "outputConcept": "community_business_live"
+      },
+      "httpTimeoutMs": 8000
+    },
+    {
+      "id": "registry_metadata",
+      "method": "GET",
+      "pathTemplate": "/arcgis/rest/services/legacy_biz/FeatureServer/0",
+      "queryStatic": {
+        "f": "json"
+      },
+      "querySuppressVariablePassthrough": true,
+      "mutating": false,
+      "discovery": {
+        "capabilityKey": "open_data.source.metadata.read",
+        "title": "Official Legacy Registry layer metadata",
+        "access": "read",
+        "authority": "live",
+        "freshness": "live"
+      },
+      "httpTimeoutMs": 8000
+    }
+  ]
+}

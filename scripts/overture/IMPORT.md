@@ -64,8 +64,10 @@ IDs; paginate for larger slices. Preserve receipts as scratch evidence under
 `think verb=reflect`.
 
 Refreshes use merge patches. Existing records receive source fields only:
-`review_status`, `research_notes`, `owner`, `next_action`, and
-`last_verified_at` remain human-owned. Existing aliases are retained. Missing
+`review_status`, `research_notes`, `owner`, `next_action`, `last_verified_at`,
+`research_focus`, `visit_status`, `planned_visit_at`, `visit_notes`,
+`verification_status`, `verification_notes` and `verification_source_url`
+remain human-owned. Existing aliases are retained. Missing
 source values are omitted because explicit null in a Gyri merge deletes a key.
 Only places absent from the verified inventory receive initial `unreviewed`
 status, blank notes, and source aliases. A known GERS ID retains its existing

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "title": "Team shortlist",
+  "description": "Keep the reason, owner and next step with each place.",
+  "accent": "sage",
+  "layout": {
+    "kind": "stack",
+    "sections": [
+      {
+        "id": "shortlisted_places",
+        "widgets": [
+          "explorer"
+        ]
+      }
+    ]
+  },
+  "widgets": [
+    {
+      "id": "explorer",
+      "kind": "concept_widget",
+      "widgetKey": "fieldwork.shortlist",
+      "version": "1.0.0",
+      "bindings": {},
+      "props": {
+        "studio": {
+          "title": "Team shortlist",
+          "summary": "Keep the reason, owner and next step with each place.",
+          "responsiveSize": "full"
+        }
+      },
+      "selection": "optional"
+    }
+  ],
+  "capabilities": {
+    "typeKeys": [
+      "fieldwork_place"
+    ],
+    "actions": [
+      "fieldwork.review_status",
+      "fieldwork.research_notes",
+      "fieldwork.next_step",
+      "fieldwork.research_focus",
+      "fieldwork.plan_visit",
+      "fieldwork.complete_visit",
+      "fieldwork.cancel_visit",
+      "fieldwork.verification"
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "title": "Field visits",
+  "description": "Internal visit plans and evidence to check before leaving.",
+  "accent": "sage",
+  "layout": {
+    "kind": "stack",
+    "sections": [
+      {
+        "id": "visit_queue",
+        "widgets": [
+          "explorer"
+        ]
+      }
+    ]
+  },
+  "widgets": [
+    {
+      "id": "explorer",
+      "kind": "concept_widget",
+      "widgetKey": "fieldwork.visits",
+      "version": "1.0.0",
+      "bindings": {},
+      "props": {
+        "studio": {
+          "title": "Field visits",
+          "summary": "Internal visit plans and evidence to check before leaving.",
+          "responsiveSize": "full"
+        }
+      },
+      "selection": "optional"
+    }
+  ],
+  "capabilities": {
+    "typeKeys": [
+      "fieldwork_place"
+    ],
+    "actions": [
+      "fieldwork.review_status",
+      "fieldwork.research_notes",
+      "fieldwork.next_step",
+      "fieldwork.research_focus",
+      "fieldwork.plan_visit",
+      "fieldwork.complete_visit",
+      "fieldwork.cancel_visit",
+      "fieldwork.verification"
+    ]
+  }
+}

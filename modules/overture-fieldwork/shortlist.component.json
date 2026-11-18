@@ -1,0 +1,620 @@
+{
+  "version": 1,
+  "name": "Team shortlist",
+  "description": "A team-owned queue with a reason and a next step for every place.",
+  "data": {
+    "source": {
+      "kind": "workspace_records",
+      "typeKey": "fieldwork_place"
+    },
+    "mode": "many",
+    "fields": [
+      {
+        "path": "name",
+        "label": "Name",
+        "role": "title"
+      },
+      {
+        "path": "category",
+        "label": "Category",
+        "role": "supporting"
+      },
+      {
+        "path": "category_label",
+        "label": "Category label",
+        "role": "supporting"
+      },
+      {
+        "path": "full_address",
+        "label": "Full address",
+        "role": "supporting"
+      },
+      {
+        "path": "latitude",
+        "label": "Latitude",
+        "role": "supporting"
+      },
+      {
+        "path": "longitude",
+        "label": "Longitude",
+        "role": "supporting"
+      },
+      {
+        "path": "website",
+        "label": "Website",
+        "role": "supporting"
+      },
+      {
+        "path": "review_status",
+        "label": "Review status",
+        "role": "supporting"
+      },
+      {
+        "path": "research_notes",
+        "label": "Research notes",
+        "role": "supporting"
+      },
+      {
+        "path": "owner",
+        "label": "Research owner",
+        "role": "supporting"
+      },
+      {
+        "path": "next_action",
+        "label": "Next step",
+        "role": "supporting"
+      },
+      {
+        "path": "visit_status",
+        "label": "Visit status",
+        "role": "supporting"
+      },
+      {
+        "path": "planned_visit_at",
+        "label": "Planned visit",
+        "role": "supporting"
+      },
+      {
+        "path": "data_release",
+        "label": "Data release",
+        "role": "supporting"
+      },
+      {
+        "path": "operating_status",
+        "label": "Operating status",
+        "role": "supporting"
+      },
+      {
+        "path": "confidence",
+        "label": "Confidence",
+        "role": "supporting"
+      },
+      {
+        "path": "overture_id",
+        "label": "Overture id",
+        "role": "supporting"
+      },
+      {
+        "path": "map_url",
+        "label": "Map url",
+        "role": "supporting"
+      },
+      {
+        "path": "brand",
+        "label": "Brand",
+        "role": "supporting"
+      },
+      {
+        "path": "visit_notes",
+        "label": "Visit notes",
+        "role": "supporting"
+      },
+      {
+        "path": "verification_status",
+        "label": "Evidence check",
+        "role": "supporting"
+      },
+      {
+        "path": "verification_notes",
+        "label": "Verification notes",
+        "role": "supporting"
+      },
+      {
+        "path": "verification_source_url",
+        "label": "Verification source url",
+        "role": "supporting"
+      },
+      {
+        "path": "research_focus",
+        "label": "Research focus",
+        "role": "supporting"
+      },
+      {
+        "path": "last_verified_at",
+        "label": "Last verified at",
+        "role": "supporting"
+      },
+      {
+        "path": "source_datasets",
+        "label": "Source datasets",
+        "role": "supporting"
+      },
+      {
+        "path": "source_licenses",
+        "label": "Source licenses",
+        "role": "supporting"
+      }
+    ],
+    "relationships": [],
+    "filters": {},
+    "excludeFilters": {},
+    "search": {
+      "parameter": "search",
+      "fields": [
+        "name",
+        "category_label",
+        "full_address",
+        "brand",
+        "research_notes",
+        "next_action",
+        "owner"
+      ]
+    },
+    "sort": {
+      "field": "record_id",
+      "order": "asc"
+    },
+    "limit": 500,
+    "maxNodes": 500
+  },
+  "semanticTypes": [
+    "fieldwork_place"
+  ],
+  "bindings": {},
+  "defaultFilters": {},
+  "renderer": {
+    "kind": "geographic",
+    "fields": [
+      {
+        "path": "name",
+        "label": "Name",
+        "emphasis": "title"
+      },
+      {
+        "path": "category",
+        "label": "Category",
+        "emphasis": "primary"
+      },
+      {
+        "path": "category_label",
+        "label": "Category label",
+        "emphasis": "primary"
+      },
+      {
+        "path": "full_address",
+        "label": "Full address",
+        "emphasis": "primary"
+      },
+      {
+        "path": "latitude",
+        "label": "Latitude",
+        "emphasis": "primary"
+      },
+      {
+        "path": "longitude",
+        "label": "Longitude",
+        "emphasis": "primary"
+      },
+      {
+        "path": "website",
+        "label": "Website",
+        "emphasis": "primary"
+      },
+      {
+        "path": "review_status",
+        "label": "Review status",
+        "emphasis": "primary"
+      },
+      {
+        "path": "research_notes",
+        "label": "Research notes",
+        "emphasis": "primary"
+      },
+      {
+        "path": "owner",
+        "label": "Research owner",
+        "emphasis": "primary"
+      },
+      {
+        "path": "next_action",
+        "label": "Next step",
+        "emphasis": "primary"
+      },
+      {
+        "path": "visit_status",
+        "label": "Visit status",
+        "emphasis": "primary"
+      },
+      {
+        "path": "planned_visit_at",
+        "label": "Planned visit",
+        "emphasis": "primary"
+      },
+      {
+        "path": "data_release",
+        "label": "Data release",
+        "emphasis": "primary"
+      },
+      {
+        "path": "operating_status",
+        "label": "Operating status",
+        "emphasis": "primary"
+      },
+      {
+        "path": "confidence",
+        "label": "Confidence",
+        "emphasis": "primary"
+      },
+      {
+        "path": "overture_id",
+        "label": "Overture id",
+        "emphasis": "primary"
+      },
+      {
+        "path": "map_url",
+        "label": "Map url",
+        "emphasis": "primary"
+      },
+      {
+        "path": "brand",
+        "label": "Brand",
+        "emphasis": "primary"
+      },
+      {
+        "path": "visit_notes",
+        "label": "Visit notes",
+        "emphasis": "primary"
+      },
+      {
+        "path": "verification_status",
+        "label": "Evidence check",
+        "emphasis": "primary"
+      },
+      {
+        "path": "verification_notes",
+        "label": "Verification notes",
+        "emphasis": "primary"
+      },
+      {
+        "path": "verification_source_url",
+        "label": "Verification source url",
+        "emphasis": "primary"
+      },
+      {
+        "path": "research_focus",
+        "label": "Research focus",
+        "emphasis": "primary"
+      },
+      {
+        "path": "last_verified_at",
+        "label": "Last verified at",
+        "emphasis": "primary"
+      },
+      {
+        "path": "source_datasets",
+        "label": "Source datasets",
+        "emphasis": "primary"
+      },
+      {
+        "path": "source_licenses",
+        "label": "Source licenses",
+        "emphasis": "primary"
+      }
+    ],
+    "options": {
+      "width": "full",
+      "density": "comfortable",
+      "detailWidgetKey": "default.fieldwork_place",
+      "fieldMap": {
+        "id": "recordId",
+        "name": "name",
+        "category": "category",
+        "categoryLabel": "category_label",
+        "address": "full_address",
+        "latitude": "latitude",
+        "longitude": "longitude",
+        "website": "website",
+        "status": "review_status",
+        "notes": "research_notes",
+        "owner": "owner",
+        "nextAction": "next_action",
+        "visitStatus": "visit_status",
+        "plannedVisit": "planned_visit_at",
+        "release": "data_release",
+        "sourceStatus": "operating_status",
+        "confidence": "confidence",
+        "sourceId": "overture_id",
+        "mapUrl": "map_url",
+        "brand": "brand",
+        "visitNotes": "visit_notes",
+        "verificationStatus": "verification_status",
+        "verificationNotes": "verification_notes",
+        "verificationSource": "verification_source_url"
+      },
+      "presets": [
+        {
+          "id": "supplier",
+          "label": "Supplier prospects",
+          "description": "Build a research list for wholesale coffee or bakery supply.",
+          "categories": [
+            "coffee_shop",
+            "cafe",
+            "bakery",
+            "coffee_roastery",
+            "sandwich_shop"
+          ],
+          "guidance": "Check the website or menu, confirm the address, and record a relevant next step. Category does not imply buying interest."
+        },
+        {
+          "id": "neighborhood",
+          "label": "Neighborhood partners",
+          "description": "Explore nearby venues for an event or community collaboration.",
+          "guidance": "Compare the place with public business records and any legacy-business context. A nearby or similar-name record is only a candidate match."
+        },
+        {
+          "id": "field_visit",
+          "label": "Field research",
+          "description": "Choose venues, check the evidence, and plan an efficient field session.",
+          "guidance": "Verify hours with the venue before visiting. Map distance is not a walking-time estimate."
+        },
+        {
+          "id": "shortlist",
+          "label": "Team shortlist",
+          "description": "Places your team has deliberately selected for more research.",
+          "filters": {
+            "review_status": "shortlisted"
+          },
+          "emptyTitle": "Your team’s shortlist starts with a decision",
+          "emptyDescription": "Explore a place, inspect the evidence, and choose shortlisted when it is worth further research."
+        },
+        {
+          "id": "visits",
+          "label": "Planned visits",
+          "description": "Your team’s internal visit plans, with ownership and next steps.",
+          "filters": {
+            "visit_status": "planned"
+          },
+          "emptyTitle": "No visits planned yet",
+          "emptyDescription": "Open a place and choose Plan a visit. Confirm opening hours separately; a plan is not a booking."
+        },
+        {
+          "id": "verify",
+          "label": "Verify first",
+          "description": "Resolve identity, website or address uncertainty before making a visit.",
+          "filters": {
+            "review_status": "verify_first"
+          },
+          "emptyTitle": "No places are waiting for verification",
+          "emptyDescription": "Use Verify first when an important fact is missing or sources disagree."
+        },
+        {
+          "id": "all",
+          "label": "All places",
+          "description": "The complete bounded Overture coffee-and-counter snapshot."
+        }
+      ],
+      "defaultPreset": "shortlist",
+      "defaultTab": "list",
+      "sourceLabel": "Overture Maps Foundation",
+      "sourceNote": "A pinned place snapshot. Public city context is requested separately and is never a confirmed match by proximity alone.",
+      "snapshot": {
+        "releaseField": "data_release",
+        "scope": "Central San Francisco · 12 venue categories",
+        "sourceIdField": "overture_id"
+      },
+      "map": {
+        "center": [
+          -122.4075,
+          37.788
+        ],
+        "zoom": 14,
+        "attribution": "© OpenStreetMap contributors · Overture Maps Foundation and source contributors"
+      },
+      "labels": {
+        "name": "Place",
+        "sourceStatus": "Source operating status",
+        "reviewStatus": "Team review",
+        "nextAction": "Next step",
+        "unknown": "Not recorded",
+        "websitePresent": "Website listed",
+        "websiteMissing": "No website listed"
+      },
+      "design": {
+        "ink": "#132B39",
+        "accent": "#176B50",
+        "signal": "#C95536",
+        "background": "#F7FAFC",
+        "surface": "#FFFFFF"
+      },
+      "contextSources": [
+        {
+          "key": "registrations",
+          "fieldKey": "nearbyRegistrations",
+          "title": "Nearby city registrations",
+          "provider": "SF Treasurer & Tax Collector · DataSF",
+          "sourceUrl": "https://data.sf.gov/d/g8m3-pdis",
+          "datasetId": "g8m3-pdis",
+          "radiusMeters": 100,
+          "limit": 10,
+          "license": "PDDL 1.0",
+          "freshness": "Requested live; provider data_as_of retained",
+          "disclaimer": "Nearby tax-location records may be historic or refer to another business. A registration is not proof this venue is currently open or that identities match.",
+          "fields": {
+            "location_start_date": "City location start",
+            "location_end_date": "City location end",
+            "business_start_date": "Business start",
+            "business_end_date": "Business end",
+            "administratively_closed": "City administrative-close flag",
+            "business_corridor": "Business corridor",
+            "neighborhood": "Analysis neighborhood",
+            "industry_code": "Self-reported NAICS code"
+          }
+        },
+        {
+          "key": "legacy",
+          "fieldKey": "nearbyLegacyBusinesses",
+          "title": "Nearby legacy businesses",
+          "provider": "SF Office of Small Business · Official Legacy Business Registry",
+          "sourceUrl": "https://sfgov.maps.arcgis.com/apps/dashboards/471cc5798f8c486fb0f8e9ac8badaf03",
+          "radiusMeters": 500,
+          "limit": 8,
+          "license": "No explicit license supplied by the source layer; live read only",
+          "freshness": "Requested live; source layer metadata available",
+          "disclaimer": "Official registry locations within 500 m, with active or in-transition program status. Proximity does not mean the selected venue is a legacy business.",
+          "fields": {
+            "source_status": "Registry program status",
+            "established_date": "Established",
+            "business_type": "Registry business type",
+            "neighborhood": "Registry neighborhood"
+          }
+        },
+        {
+          "key": "stops",
+          "fieldKey": "nearbyTransitStops",
+          "title": "Nearby Muni stops",
+          "provider": "SFMTA · DataSF",
+          "sourceUrl": "https://data.sf.gov/d/i28k-bkz6",
+          "datasetId": "i28k-bkz6",
+          "radiusMeters": 400,
+          "limit": 8,
+          "license": "PDDL 1.0",
+          "freshness": "Requested live from published static inventory; source data_as_of was 2026-04-08 when checked",
+          "disclaimer": "Stop inventory only. Distances are straight-line; no current arrivals, walking route, service or accessibility guarantee.",
+          "fields": {
+            "on_street": "Inventory on-street",
+            "at_street": "Inventory cross-street",
+            "orientation": "Inventory orientation",
+            "shelter": "Inventory shelter"
+          }
+        },
+        {
+          "key": "neighborhood",
+          "fieldKey": "analysisNeighborhood",
+          "title": "Analysis neighborhood",
+          "provider": "SF Planning Department · DataSF",
+          "sourceUrl": "https://data.sf.gov/d/j2bu-swwd",
+          "datasetId": "j2bu-swwd",
+          "limit": 2,
+          "license": "PDDL 1.0",
+          "freshness": "Static analysis grouping; dataset rows last updated 2023-10-17 when checked",
+          "disclaimer": "Census-tract analysis grouping for organization and field planning. Not an official or legal neighborhood designation.",
+          "fields": {}
+        }
+      ],
+      "contextLoad": "on_demand",
+      "contextDisclaimer": "Spatial context is not a venue identity match. Compare names and addresses before relying on a public record.",
+      "sourceUrl": "https://overturemaps.org",
+      "statusLabels": {
+        "unreviewed": "Not yet reviewed",
+        "verify_first": "Needs a check",
+        "shortlisted": "Shortlisted",
+        "visited": "Visited",
+        "passed": "Passed"
+      }
+    }
+  },
+  "children": [],
+  "actions": [
+    {
+      "actionKey": "fieldwork.review_status",
+      "label": "Update review",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.research_notes",
+      "label": "Edit research notes",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.next_step",
+      "label": "Set next step",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.research_focus",
+      "label": "Set research purpose",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.plan_visit",
+      "label": "Plan a visit",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}",
+        "visit_status": "planned"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.complete_visit",
+      "label": "Record a completed visit",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}",
+        "visit_status": "visited",
+        "review_status": "visited"
+      },
+      "requiresApproval": false,
+      "refresh": [],
+      "confirm": {
+        "title": "Record a completed visit",
+        "message": "Use this only for a visit your team actually completed. Your observations will be saved on this place."
+      }
+    },
+    {
+      "actionKey": "fieldwork.cancel_visit",
+      "label": "Cancel visit plan",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}",
+        "visit_status": "cancelled"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.verification",
+      "label": "Record an evidence check",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    }
+  ],
+  "style": {
+    "tokens": {
+      "ink": "#132B39",
+      "accent": "#176B50",
+      "surface": "#FFFFFF",
+      "bodySize": "16px",
+      "labelSize": "14px"
+    },
+    "scopedCss": ""
+  },
+  "fixtures": []
+}

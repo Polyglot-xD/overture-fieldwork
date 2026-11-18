@@ -7,7 +7,7 @@
       "id": "scope",
       "kind": "text",
       "title": "A useful slice, not an exhaustive directory",
-      "content": "Coffee & Counter focuses on cafes, coffee shops and counter-service food venues in central San Francisco. It gives wholesale roasters, bakery suppliers and neighborhood partnership teams a starting research queue.\n\nThe initial workspace contains 486 places from Overture Maps places release 2026-11-18.0, inside bounding box [-122.422, 37.775, -122.393, 37.801]. The extraction selects 12 categories, requires place confidence of at least 0.80, and excludes places explicitly marked permanently closed.\n\nUnknown operating status remains unknown. Named chains may appear. Missing brand metadata never proves independent ownership.",
+      "content": "Coffee & Counter starts with 486 places in a bounded central San Francisco area from Overture Maps release 2026-11-18.0. The box is west -122.422, south 37.775, east -122.393, north 37.801. Twelve coffee, cafe, bakery, tea and counter-service categories are selected, with place existence confidence at least 0.80 and permanently closed source records excluded.\n\nUnknown source operating status stays unknown. Missing brand metadata does not prove independent ownership. A listed website has not automatically been checked.",
       "layout": {
         "x": 0,
         "y": 0,
@@ -22,7 +22,7 @@
       "id": "evidence",
       "kind": "text",
       "title": "Keep evidence and judgment separate",
-      "content": "Each place retains its Overture/GERS ID, record version, release, coordinates, source datasets, licenses, source evidence and unmodified raw properties.\n\nOverture confidence estimates place existence. It is not partner fit or venue quality. Website listed means a URL exists in the source; it is not a reachability test.\n\nTeam review status, research notes, owner, next action and last verification time start empty or unreviewed. These judgments survive a later source refresh.",
+      "content": "Overture source facts: GERS ID, release, coordinates, category, confidence and supplied URLs. The underlying provider observations may be older than the Overture release.\n\nLive public context: a separately requested city-source response, with its own refresh time and coverage. Similar names, nearby records and shared addresses are candidate evidence, not automatic identity matches.\n\nTeam judgment: review status, purpose, notes, owner, next step, verification and visit plans. These fields are deliberately preserved during source refreshes.",
       "layout": {
         "x": 0,
         "y": 4,
@@ -34,7 +34,7 @@
       "id": "cuts",
       "kind": "text",
       "title": "Deliberate trade-offs",
-      "content": "A bounded, one-time snapshot keeps the workspace fast and the import reproducible. All 486 selected places fit within the Explore view’s 500-row limit. The extractor reapplies the exact bounding box before selection.\n\nUse the map URL in a place’s fields to inspect its location. Gyri supplies search, records, evidence, shared research and permissions.\n\nThis version cuts live refresh, embedded map tiles, route optimization, automatic fit scoring, contact enrichment and outbound campaigns.",
+      "content": "Use supplier prospecting to build a focused research queue; neighborhood partnerships to understand local context; and field research to prepare a visit. Always inspect the original source before relying on a match.\n\nMap points are source locations and may conflict with supplied addresses. Distance is a straight-line aid, not a route or walking time. No opening-hours guarantee, contact enrichment, automatic fit score, booking, route optimization or outbound campaign is provided.",
       "layout": {
         "x": 6,
         "y": 4,
@@ -46,7 +46,7 @@
       "id": "attribution",
       "kind": "text",
       "title": "Attribution and source links",
-      "content": "Data © Overture Maps Foundation and its source contributors. Source-specific license metadata remains on each record. The extraction bundle includes its manifest, applicable license files and the Foursquare places notice.\n\nOverture Maps: https://overturemaps.org/\nData explorer: https://explore.overturemaps.org/\nPlaces schema: https://docs.overturemaps.org/schema/reference/places/place/\nAttribution: https://docs.overturemaps.org/attribution/\nFoursquare notice: https://opensource.foursquare.com/places-notice-txt/\n\nOpenStreetMap links support location inspection; they do not verify a business fact.",
+      "content": "Overture Maps Foundation and its source contributors. Per-record licenses, raw properties and source metadata remain attached. The extraction bundle includes the applicable CDLA-Permissive-2.0, Apache-2.0 and CC0-1.0 notices.\n\nOverture attribution: https://docs.overturemaps.org/attribution/\nFoursquare notice: https://opensource.foursquare.com/places-notice-txt/\nOpenStreetMap map data: https://www.openstreetmap.org/copyright\n\nPublic city sources retain their own attribution and terms in the source catalog. Their availability and refresh schedules are independent of this workspace.",
       "layout": {
         "x": 0,
         "y": 8,
@@ -55,6 +55,21 @@
       },
       "style": {
         "accent": "neutral"
+      }
+    },
+    {
+      "id": "public_context",
+      "kind": "text",
+      "title": "Four independent public sources",
+      "content": "Nearby city registrations: SF Treasurer & Tax Collector tax-location records within 100 m. Some may be historical or refer to another business; registration does not establish current opening status.\n\nNearby legacy businesses: the official Legacy Business Registry within 500 m. A nearby registry location does not make the selected venue a legacy business.\n\nNearby Muni stops: the published SFMTA stop inventory within 400 m. This is spatial planning context, not real-time service or a walking route.\n\nAnalysis neighborhood: the SF Planning census-tract analysis grouping around the source point. It is an organizational aid, not a legal or official neighborhood designation.\n\nEach response retains its source link and independent freshness. These sources are fetched on demand, not joined by name into the Overture record.",
+      "layout": {
+        "x": 0,
+        "y": 12,
+        "w": 12,
+        "h": 6
+      },
+      "style": {
+        "accent": "sky"
       }
     }
   ]

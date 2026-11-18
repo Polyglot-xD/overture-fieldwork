@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "name": "Fieldwork place",
-  "description": "Inspect the source, then update your team’s review or replace its research notes. These actions save only the selected place’s team fields.",
+  "name": "Place workspace",
+  "description": "Check the place and its source context, then save a clear next step. Team decisions never change source evidence.",
   "data": {
     "source": {
       "kind": "workspace_records",
@@ -60,6 +60,31 @@
         "path": "data_release",
         "label": "Source release",
         "role": "metadata"
+      },
+      {
+        "path": "next_action",
+        "label": "Next step",
+        "role": "primary"
+      },
+      {
+        "path": "owner",
+        "label": "Research owner",
+        "role": "primary"
+      },
+      {
+        "path": "visit_status",
+        "label": "Visit status",
+        "role": "primary"
+      },
+      {
+        "path": "planned_visit_at",
+        "label": "Planned visit",
+        "role": "primary"
+      },
+      {
+        "path": "verification_status",
+        "label": "Evidence check",
+        "role": "primary"
       }
     ],
     "relationships": [],
@@ -131,6 +156,31 @@
         "path": "data_release",
         "label": "Source release",
         "emphasis": "metadata"
+      },
+      {
+        "path": "next_action",
+        "label": "Next step",
+        "emphasis": "primary"
+      },
+      {
+        "path": "owner",
+        "label": "Research owner",
+        "emphasis": "primary"
+      },
+      {
+        "path": "visit_status",
+        "label": "Visit status",
+        "emphasis": "primary"
+      },
+      {
+        "path": "planned_visit_at",
+        "label": "Planned visit",
+        "emphasis": "primary"
+      },
+      {
+        "path": "verification_status",
+        "label": "Evidence check",
+        "emphasis": "primary"
       }
     ],
     "options": {
@@ -143,7 +193,7 @@
   "actions": [
     {
       "actionKey": "fieldwork.review_status",
-      "label": "Update review status",
+      "label": "Update review",
       "inputBindings": {
         "record_id": "{{row.recordId}}"
       },
@@ -152,7 +202,69 @@
     },
     {
       "actionKey": "fieldwork.research_notes",
-      "label": "Replace research notes",
+      "label": "Edit research notes",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.next_step",
+      "label": "Set next step",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.research_focus",
+      "label": "Set research purpose",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.plan_visit",
+      "label": "Plan a visit",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}",
+        "visit_status": "planned"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.complete_visit",
+      "label": "Record a completed visit",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}",
+        "visit_status": "visited",
+        "review_status": "visited"
+      },
+      "requiresApproval": false,
+      "refresh": [],
+      "confirm": {
+        "title": "Record a completed visit",
+        "message": "Use this only for a visit your team actually completed. Your observations will be saved on this place."
+      }
+    },
+    {
+      "actionKey": "fieldwork.cancel_visit",
+      "label": "Cancel visit plan",
+      "inputBindings": {
+        "record_id": "{{row.recordId}}",
+        "visit_status": "cancelled"
+      },
+      "requiresApproval": false,
+      "refresh": []
+    },
+    {
+      "actionKey": "fieldwork.verification",
+      "label": "Record an evidence check",
       "inputBindings": {
         "record_id": "{{row.recordId}}"
       },

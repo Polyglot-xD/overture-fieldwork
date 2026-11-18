@@ -1,103 +1,49 @@
 {
   "version": 1,
   "title": "Coffee & Counter",
-  "description": "Find your next neighborhood partner. Search 486 San Francisco cafes and counter-service venues from Overture Maps, then open a row to inspect its source evidence. Use Update review status or Replace research notes on the place to save your team’s judgment.",
+  "description": "Local venue research for suppliers, neighborhood teams, and field visits.",
   "accent": "sage",
   "layout": {
     "kind": "stack",
     "sections": [
       {
-        "id": "places",
+        "id": "research_map",
         "widgets": [
-          "filters",
-          "table"
+          "explorer"
         ]
       }
     ]
   },
   "widgets": [
     {
-      "id": "filters",
-      "kind": "filter_bar",
-      "search": {
-        "fields": [
-          "name",
-          "category_label",
-          "full_address",
-          "website",
-          "brand",
-          "research_notes",
-          "owner",
-          "next_action"
-        ],
-        "placeholder": "Find a venue, street, category, or note…"
-      },
-      "stageChips": {
-        "field": "review_status",
-        "enum": [
-          "unreviewed",
-          "verify_first",
-          "shortlisted",
-          "visited",
-          "passed"
-        ],
-        "clientSide": true
-      },
-      "sort": {
-        "field": "record_id",
-        "order": "asc"
-      },
-      "pagination": {
-        "defaultLimit": 500
-      }
-    },
-    {
-      "id": "table",
-      "kind": "record_table",
-      "dataSource": {
-        "kind": "workspace_records",
-        "typeKey": "fieldwork_place",
-        "limit": 500
-      },
-      "sort": {
-        "field": "record_id",
-        "order": "asc"
-      },
-      "columns": [
-        {
-          "field": "name",
-          "label": "Place",
-          "primary": true,
-          "subField": "full_address"
-        },
-        {
-          "field": "category_label",
-          "label": "Venue type"
-        },
-        {
-          "field": "review_status",
-          "label": "Team review",
-          "format": "stage_badge"
-        },
-        {
-          "field": "website_available",
-          "label": "Website listed",
-          "format": "boolean_yes"
-        },
-        {
-          "field": "research_notes",
-          "label": "Research notes"
+      "id": "explorer",
+      "kind": "concept_widget",
+      "widgetKey": "fieldwork.explorer",
+      "version": "1.0.0",
+      "bindings": {},
+      "props": {
+        "studio": {
+          "title": "Coffee & Counter",
+          "summary": "Local venue research for suppliers, neighborhood teams, and field visits.",
+          "responsiveSize": "full"
         }
-      ],
-      "selectable": true,
-      "realtime": {
-        "typeKey": "fieldwork_place"
-      }
+      },
+      "selection": "optional"
     }
   ],
   "capabilities": {
     "typeKeys": [
       "fieldwork_place"
+    ],
+    "actions": [
+      "fieldwork.review_status",
+      "fieldwork.research_notes",
+      "fieldwork.next_step",
+      "fieldwork.research_focus",
+      "fieldwork.plan_visit",
+      "fieldwork.complete_visit",
+      "fieldwork.cancel_visit",
+      "fieldwork.verification"
     ]
   }
 }

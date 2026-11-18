@@ -46,6 +46,13 @@
       "research_notes",
       "owner",
       "next_action",
+      "research_focus",
+      "visit_status",
+      "planned_visit_at",
+      "visit_notes",
+      "verification_status",
+      "verification_notes",
+      "verification_source_url",
       "last_verified_at"
     ]
   },
